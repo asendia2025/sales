@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년 영업1팀 경영목표 수립안 (Protected)</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://github.com/asendia2025/sales/blob/main/img/logo_company_transparency.png?raw=true">
+
+    <!-- Tailwind CSS & Iconify -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+        
+        /* Glass effects */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .neon-border {
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.1); }
+            100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        }
+
+        .animate-neon-pulse {
+            animation: neonPulse 3s infinite alternate;
+        }
+
+        /* Content Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .animate-fade-up { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fade-scale { opacity: 0; animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .chart-container { position: relative; width: 100%; height: 300px; }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
+
+        /* Login Screen Specific */
+        #login-screen {
+            position: fixed; inset: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+            background: #e4e4e7; /* Zinc 200 */
+        }
+
+        /* Sync specific layout adjustments */
+        .delay-75 { animation-delay: 75ms; }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        asendia: {
+                            blue: '#1e3a8a',
+                            light: '#eff6ff',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-zinc-100 min-h-screen selection:bg-asendia-blue selection:text-white relative">
+
+    <!-- Login Screen Overlay -->
+    <div id="login-screen">
+        <div class="w-full max-w-md p-8 glass-panel rounded-[2rem] shadow-2xl border border-white/60 text-center animate-fade-scale">
+            <img src="https://github.com/asendia2025/sales/blob/main/img/logo_company_transparency.png?raw=true" alt="ASENDIA" class="h-12 mx-auto mb-6">
+            <h2 class="text-xl font-extrabold text-zinc-900 tracking-tight mb-2 uppercase">Access Authorization</h2>
+            <p class="text-sm text-zinc-500 mb-8">2026 경영목표 수립안 열람을 위해 암호를 입력하세요.</p>
+            
+            <div class="relative mb-4">
+                <input type="password" id="password-input" placeholder="Password" 
+                    class="w-full px-6 py-4 bg-zinc-50 border border-zinc-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-asendia-blue transition-all text-center font-mono tracking-widest">
+            </div>
+            
+            <button onclick="checkPassword()" class="w-full py-4 bg-asendia-blue text-white font-bold rounded-2xl hover:bg-blue-900 transition-all shadow-lg shadow-blue-900/20 active:scale-[0.98]">
+                Unlock Report
+            </button>
+            
+            <p id="error-msg" class="text-xs text-red-500 mt-4 opacity-0 transition-opacity">암호가 올바르지 않습니다. 다시 시도해 주세요.</p>
+            
+            <div class="mt-10 pt-6 border-t border-zinc-100 flex justify-center gap-6">
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Confidential</span>
+                <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Sales Team 1</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Protected Content (Hidden by default) -->
+    <div id="protected-content" class="hidden p-0 md:p-6 lg:p-12 flex justify-center items-start opacity-0 transition-opacity duration-700">
+        
+        <!-- Background Grid Lines -->
+        <div class="fixed inset-0 flex justify-between pointer-events-none z-0 px-6 md:px-12 w-full h-full opacity-30">
+            <div class="h-full w-[1px] bg-zinc-400/20"></div>
+            <div class="h-full w-[1px] bg-zinc-400/20 hidden md:block"></div>
+            <div class="h-full w-[1px] bg-zinc-400/20 hidden lg:block"></div>
+            <div class="h-full w-[1px] bg-zinc-400/20"></div>
+        </div>
+
+        <!-- Main Container -->
+        <main class="glass-panel w-full max-w-[1300px] z-10 border border-white/60 rounded-[2.5rem] shadow-2xl p-6 md:p-12 flex flex-col gap-12">
+            
+            <!-- Header -->
+            <header class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-zinc-100 pb-8 animate-fade-up">
+                <div class="flex items-center gap-4 group">
+                    <div class="p-2 bg-white rounded-xl shadow-sm border border-zinc-100 transition-transform group-hover:rotate-3">
+                        <img src="https://github.com/asendia2025/sales/blob/main/img/logo_company_transparency.png?raw=true" alt="ASENDIA Logo" class="h-10 w-auto">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-zinc-900 tracking-tighter uppercase">ASENDIA 영업1팀</h1>
+                        <p class="text-xs text-zinc-400 font-medium tracking-widest uppercase">2026 Management Goals Review • Rev.1</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <span class="px-4 py-1.5 bg-asendia-light text-asendia-blue text-[10px] font-bold rounded-full border border-blue-100 uppercase tracking-wider">
+                        Draft
+                    </span>
+                    <button onclick="window.print()" class="p-2.5 bg-white border border-zinc-200 rounded-lg text-zinc-600 hover:text-asendia-blue transition-all hover:shadow-md">
+                        <iconify-icon icon="lucide:printer" width="18"></iconify-icon>
+                    </button>
+                </div>
+            </header>
+
+            <!-- References Section (Synced from Business Objectives 2.html) -->
+            <section class="bg-zinc-50 p-8 rounded-[2rem] border border-dashed border-zinc-200 animate-fade-up delay-75">
+                <h3 class="text-sm font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                    <iconify-icon icon="lucide:book-open" class="text-asendia-blue" width="16"></iconify-icon>
+                    참고 문헌 및 자료 출처
+                </h3>
+                <p class="text-xs text-zinc-500 mb-6">본 목표 수립안은 다음의 주요 내부 데이터 및 외부 시장 분석 자료를 근거로 작성되었습니다.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Internal & Core -->
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">내부 자료</h4>
+                        <div class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm">
+                            <p class="text-xs font-bold text-zinc-800">ASENDIA</p>
+                            <p class="text-[10px] text-zinc-500">2025년 고객별/월별 매출 실적 데이터 (sales_data.csv)</p>
+                        </div>
+                    </div>
+
+                    <!-- ASM Official -->
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">ASM 공식 발표</h4>
+                        <a href="https://www.asm.com/media/m3jhkm12/asm_investor_day_2025.pdf" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">Investor Day 2025 보고서</p>
+                            <p class="text-[10px] text-zinc-400 mt-1 flex items-center gap-1 italic">PDF 원문 보기 <iconify-icon icon="lucide:external-link" width="10"></iconify-icon></p>
+                        </a>
+                        <a href="https://www.asm.com/press-releases/3175789" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">Q3 2025 실적 발표</p>
+                            <p class="text-[10px] text-zinc-400 mt-1 italic">공식 보도자료</p>
+                        </a>
+                    </div>
+
+                    <!-- Market Analysis -->
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">시장 분석</h4>
+                        <a href="https://seekingalpha.com/article/4856155-asml-positive-2026-outlook-despite-china-weakness" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">2026 가이던스</p>
+                            <p class="text-[10px] text-zinc-500 mt-1">Seeking Alpha 분석 자료</p>
+                        </a>
+                        <a href="https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">SEMI 글로벌 전망</p>
+                            <p class="text-[10px] text-zinc-500 mt-1">반도체 장비 매출 전망</p>
+                        </a>
+                        <a href="https://www.verifiedmarketresearch.com/product/plasma-enhanced-ald-equipment-market" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">PE-ALD Market 분석</p>
+                            <p class="text-[10px] text-zinc-500 mt-1">Verified Market Research</p>
+                        </a>
+                    </div>
+
+                    <!-- Additional & News -->
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">추가 자료 및 전망</h4>
+                        <a href="https://www.blog.baldengineering.com/2025/09/asm-charts-future-of-ald-scaling.html" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">Bald Engineering Blog</p>
+                        </a>
+                        <a href="https://www.bloomberg.com/news/articles/2025-10-28/asm-third-quarter-orders-miss-estimates-after-weak-outlook" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">Bloomberg: Order Growth</p>
+                        </a>
+                        <a href="https://simplywall.st/stocks/nl/semiconductors/ams-asm/asm-international-shares/future" target="_blank" class="p-3 bg-white rounded-xl border border-zinc-100 shadow-sm hover:border-asendia-blue transition-colors group">
+                            <p class="text-xs font-bold text-zinc-800 group-hover:text-asendia-blue">ASM Future Growth</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-4 flex gap-4">
+                     <a href="https://www.marketgrowthreports.com/market-reports/plasma-enhanced-cvd-equipment-market-107219" target="_blank" class="px-4 py-2 bg-white rounded-full border border-zinc-100 shadow-sm hover:shadow-md transition-all text-[10px] font-bold text-zinc-600 flex items-center gap-2">
+                        <iconify-icon icon="lucide:link" width="12"></iconify-icon> PE-CVD Equipment Market 2026 전망
+                     </a>
+                </div>
+            </section>
+
+            <!-- Summary & Overview -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 animate-fade-up delay-100">
+                <div class="lg:col-span-7">
+                    <h2 class="text-3xl font-bold text-zinc-900 tracking-tight mb-4 flex items-center gap-2">
+                        실적 분석 및 전략 개요
+                    </h2>
+                    <div class="border-l-4 border-asendia-blue pl-6 py-2">
+                        <p class="text-zinc-600 leading-relaxed">
+                            2025년 실적 분석 결과, ASM향 매출은 전체 RF 사업의 <span class="font-bold text-asendia-blue">65.51%</span>를 차지하는 핵심 포트폴리오입니다. <br>
+                            특히 <strong>제조팀과의 긴밀한 협업</strong>을 통해 <strong>Arius(60MHz) 장비의 양산</strong> 및 <strong>EVC 적용 플랫폼의 조기 양산화 및 이익률 개선</strong>을 최우선 과제로 삼고 있습니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 flex items-center justify-center lg:justify-end gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-zinc-100 shadow-sm text-center w-32">
+                        <p class="text-[10px] text-zinc-400 font-bold uppercase mb-1">ASM OEM</p>
+                        <p class="text-2xl font-black text-asendia-blue">45.4%</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-zinc-100 shadow-sm text-center w-32">
+                        <p class="text-[10px] text-zinc-400 font-bold uppercase mb-1">ASM CM</p>
+                        <p class="text-2xl font-black text-cyan-600">20.1%</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPI Scoreboard -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-up delay-200">
+                <div class="bg-white p-8 rounded-3xl border border-zinc-100 card-hover shadow-sm">
+                    <h3 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">2025 RF Total</h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-zinc-900 tracking-tighter">396.9</span>
+                        <span class="text-sm font-medium text-zinc-400">억</span>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-zinc-100 card-hover shadow-sm">
+                    <h3 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">2025 ASM Base</h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-zinc-900 tracking-tighter">260.0</span>
+                        <span class="text-sm font-medium text-zinc-400">억</span>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 p-8 rounded-3xl shadow-xl card-hover text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">2026 Target</h3>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-4xl font-black tracking-tighter">286.0</span>
+                            <span class="text-sm font-medium text-zinc-400">억</span>
+                        </div>
+                        <p class="mt-2 text-[10px] text-emerald-400 font-bold">+10% Growth Plan</p>
+                    </div>
+                    <div class="absolute -right-4 -bottom-4 opacity-10">
+                        <iconify-icon icon="lucide:trending-up" width="80"></iconify-icon>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-zinc-100 card-hover shadow-sm">
+                    <h3 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">2026 Best Case</h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-emerald-600 tracking-tighter">299.0</span>
+                        <span class="text-sm font-medium text-zinc-400">억</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Grid -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Scenario -->
+                <div class="bg-zinc-50/50 p-8 rounded-[2rem] border border-zinc-100">
+                    <h3 class="text-lg font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-asendia-blue"></span> 시나리오 분석
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="scenarioChart"></canvas>
+                    </div>
+                </div>
+                <!-- Half-year Split -->
+                <div class="bg-zinc-50/50 p-8 rounded-[2rem] border border-zinc-100">
+                    <h3 class="text-lg font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-asendia-blue"></span> 상/하반기 전략 비중
+                    </h3>
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="w-48 h-48">
+                            <canvas id="splitChart"></canvas>
+                        </div>
+                        <div class="flex flex-col gap-4 w-full">
+                            <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-zinc-100">
+                                <span class="text-xs font-bold text-zinc-500">상반기 (H1)</span>
+                                <span class="text-sm font-black text-zinc-400">46.1%</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-asendia-blue/20">
+                                <span class="text-xs font-bold text-asendia-blue">하반기 (H2)</span>
+                                <span class="text-sm font-black text-asendia-blue">53.9%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Trend Chart -->
+            <section class="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-zinc-900 tracking-tight">월별 매출 추이: 실적 vs 목표</h3>
+                        <p class="text-xs text-zinc-400 mt-1">2025년 확정 데이터 및 2026년 가이드라인 기준</p>
+                    </div>
+                    <div class="flex gap-4 text-[10px] font-bold uppercase tracking-widest">
+                        <span class="flex items-center gap-1.5 text-zinc-400"><span class="w-2 h-2 rounded-full bg-zinc-200"></span> 2025</span>
+                        <span class="flex items-center gap-1.5 text-asendia-blue"><span class="w-2 h-2 rounded-full bg-asendia-blue"></span> 2026</span>
+                    </div>
+                </div>
+                <div class="chart-container !h-[400px]">
+                    <canvas id="mainTrendChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Detailed Action Plan & Data -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Strategic Pillars -->
+                <div class="lg:col-span-5 flex flex-col gap-4">
+                    <h3 class="text-lg font-bold text-zinc-900 mb-2">실행 전략 상세</h3>
+                    <div class="group p-6 bg-white rounded-2xl border border-zinc-100 hover:border-asendia-blue/30 transition-all card-hover">
+                        <h4 class="text-sm font-bold text-zinc-900 mb-2">1. Arius/EVC 양산화 대응</h4>
+                        <p class="text-xs text-zinc-500 leading-relaxed">제조팀과 긴밀히 협업하여 Arius(60MHz) 및 EVC Matcher의 적기 공급 체계를 구축하고 품질 안정성을 확보함.</p>
+                    </div>
+                    <div class="group p-6 bg-white rounded-2xl border border-zinc-100 hover:border-cyan-400/30 transition-all card-hover">
+                        <h4 class="text-sm font-bold text-zinc-900 mb-2">2. 플랫폼 전용 물량 최적화</h4>
+                        <p class="text-xs text-zinc-500 leading-relaxed">Micron, Samsung, Intel향 신규 플랫폼 공급을 위한 제조 공정 밸런싱을 강화하여 하반기 집중 물량 대응력을 제고함.</p>
+                    </div>
+                    <div class="group p-6 bg-white rounded-2xl border border-zinc-100 hover:border-emerald-400/30 transition-all card-hover">
+                        <h4 class="text-sm font-bold text-zinc-900 mb-2">3. 수익성 방어 및 원가 분석</h4>
+                        <p class="text-xs text-zinc-500 leading-relaxed">영업이익률 15% 이상 달성을 위해 제조팀과 원가 구조 분석 및 현장 개선 활동을 연계하여 영업 경쟁력을 강화함.</p>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="lg:col-span-7 bg-white rounded-[2rem] border border-zinc-100 shadow-sm overflow-hidden flex flex-col">
+                    <div class="p-6 bg-zinc-50 border-b border-zinc-100 flex justify-between items-center">
+                        <h4 class="text-sm font-bold text-zinc-700">월별 매출 상세 데이터</h4>
+                        <span class="text-[10px] text-zinc-400 font-medium">단위: 원</span>
+                    </div>
+                    <div class="overflow-x-auto max-h-[400px]">
+                        <table class="w-full text-left">
+                            <thead class="sticky top-0 bg-white shadow-sm">
+                                <tr>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase">월</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase text-right">2025 실적</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-asendia-blue uppercase text-right">2026 목표</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase text-right">YoY</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody" class="divide-y divide-zinc-50 text-[11px]">
+                                <!-- Rows generated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="flex flex-col md:flex-row justify-between items-center gap-4 pt-10 border-t border-zinc-100">
+                <p class="text-[10px] text-zinc-400 font-medium">© 2026 ASENDIA Sales Team 1 Strategy. Confidentially Shared.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-[10px] font-bold text-zinc-400 hover:text-zinc-900 transition-colors uppercase">Strategy Plan</a>
+                    <a href="#" class="text-[10px] font-bold text-zinc-400 hover:text-zinc-900 transition-colors uppercase">Confidential</a>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <script>
+        const PASSWORD = 'sales2026';
+
+        function checkPassword() {
+            const inputField = document.getElementById('password-input');
+            const input = inputField.value.trim();
+            const loginScreen = document.getElementById('login-screen');
+            const content = document.getElementById('protected-content');
+            const errorMsg = document.getElementById('error-msg');
+
+            if (input === PASSWORD) {
+                loginScreen.style.display = 'none';
+                content.classList.remove('hidden');
+                
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        content.classList.remove('opacity-0');
+                        content.classList.add('opacity-100');
+                        
+                        try {
+                            initCharts();
+                            renderTable();
+                        } catch (e) {
+                            console.error("Initialization error:", e);
+                        }
+                    }, 50);
+                });
+            } else {
+                errorMsg.classList.remove('opacity-0');
+                inputField.classList.add('ring-2', 'ring-red-400');
+                setTimeout(() => {
+                    inputField.classList.remove('ring-2', 'ring-red-400');
+                }, 1000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputField = document.getElementById('password-input');
+            if (inputField) {
+                inputField.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') checkPassword();
+                });
+                inputField.focus();
+            }
+        });
+
+        // --- Data & Rendering Logic (Synced from Business Objectives 2.html) ---
+        const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+        const raw2025 = [3204769350, 3285289531, 1202560544, 1825627092, 3462898954, 1894760380, 2708543513, 1881178693, 2072594302, 1112548754, 1877957667, 1468271908];
+        const raw2026 = [1715800000, 1715800000, 2287700000, 2287700000, 2573700000, 2573700000, 2859700000, 2859700000, 2859700000, 2859700000, 2144800000, 1858700000];
+
+        function initCharts() {
+            const chart2025 = raw2025.map(v => (v / 100000000).toFixed(1));
+            const chart2026 = raw2026.map(v => (v / 100000000).toFixed(1));
+
+            const commonOptions = {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { family: "'Inter', 'Noto Sans KR'", size: 10, weight: '600' }, usePointStyle: true, padding: 20 } },
+                    tooltip: { backgroundColor: '#18181b', padding: 12, cornerRadius: 12, titleFont: { size: 12, weight: '700' }, bodyFont: { size: 11 } }
+                }
+            };
+
+            // 1. Trend Chart
+            new Chart(document.getElementById('mainTrendChart'), {
+                data: {
+                    labels: months,
+                    datasets: [
+                        { type: 'line', label: '2025년 실적', data: chart2025, borderColor: '#e2e8f0', borderWidth: 2, borderDash: [5, 5], pointRadius: 0, tension: 0.4, fill: false },
+                        { type: 'bar', label: '2026년 목표', data: chart2026, backgroundColor: (ctx) => ctx.dataIndex >= 6 ? '#1e3a8a' : '#94a3b8', borderRadius: 8, barThickness: 24 }
+                    ]
+                },
+                options: {
+                    ...commonOptions,
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f8fafc' }, border: { display: false }, ticks: { font: { size: 10 } } },
+                        x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // 2. Scenario Chart
+            new Chart(document.getElementById('scenarioChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Best Case', 'Target Plan', 'Worst Case'],
+                    datasets: [{ data: [299.0, 286.0, 267.8], backgroundColor: ['#10b981', '#1e3a8a', '#cbd5e1'], borderRadius: 12, barThickness: 32 }]
+                },
+                options: {
+                    ...commonOptions,
+                    indexAxis: 'y',
+                    plugins: { ...commonOptions.plugins, legend: { display: false } },
+                    scales: { x: { min: 250, grid: { display: false } }, y: { grid: { display: false } } }
+                }
+            });
+
+            // 3. Split Chart
+            const h1Sum = chart2026.slice(0, 6).reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+            const h2Sum = chart2026.slice(6, 12).reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+            new Chart(document.getElementById('splitChart'), {
+                type: 'doughnut',
+                data: { labels: ['상반기', '하반기'], datasets: [{ data: [h1Sum, h2Sum], backgroundColor: ['#e2e8f0', '#1e3a8a'], borderWidth: 0, hoverOffset: 10 }] },
+                options: { ...commonOptions, cutout: '75%', plugins: { ...commonOptions.plugins, legend: { display: false } } }
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            const fmt = (n) => new Intl.NumberFormat('ko-KR').format(n);
+            
+            raw2026.forEach((val, idx) => {
+                const row = document.createElement('tr');
+                const diff = val - raw2025[idx];
+                const pct = ((diff / raw2025[idx]) * 100).toFixed(1);
+                row.className = "hover:bg-zinc-50 transition-colors";
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-zinc-900">${months[idx]}</td>
+                    <td class="px-6 py-4 text-right text-zinc-400">${fmt(raw2025[idx])}</td>
+                    <td class="px-6 py-4 text-right font-black text-asendia-blue bg-blue-50/20">${fmt(val)}</td>
+                    <td class="px-6 py-4 text-right font-bold ${pct > 0 ? 'text-emerald-500' : 'text-rose-400'}">${pct > 0 ? '+' : ''}${pct}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
