@@ -18,13 +18,13 @@ window.coreProjectData = [
         "category": "RFG",
         "model": "Not Determined",
         "target": "2026-07-30",
-        "phase_0_plan": "2026-01-15",
-        "phase_0_close": "",
+        "phase_0_plan": "2026-01-10",
+        "phase_0_close": "2026-01-10",
         "phase_1_plan": "2026-02-28",
         "phase_1_close": "",
         "JDP_plan": "2026-07-30",
         "JDP_close": "",
         "status": "On Track",
-        "note": "진행사항을 파악해야 합니다."
+        "note": "ASM SU에서 현재의 진행상황을 공유되기를 원함(26/1/6)"
     }
 ];
