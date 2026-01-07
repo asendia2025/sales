@@ -26,5 +26,37 @@ window.coreProjectData = [
         "JDP_close": "",
         "status": "On Track",
         "note": "ASM SU에서 현재의 진행상황을 공유되기를 원함(26/1/6)"
+    },
+
+        {
+        "tasks": "Arius JQCM 60M RFG CIP",
+        "dept": "R&D",
+        "category": "RFG",
+        "model": "APG-2060HG",
+        "target": "2026-03-30",
+        "phase_0_plan": "2026-01-15",
+        "phase_0_close": "",
+        "phase_1_plan": "2026-03-21",
+        "phase_1_close": "",
+        "JDP_plan": "2026-05-30",
+        "JDP_close": "",
+        "status": "On Track",
+        "note": "진행사항 파악 필요"
+    },
+
+       {
+        "tasks": "Arius JQCM 60M RFM M to M 산포개선",
+        "dept": "R&D",
+        "category": "RFM",
+        "model": "AFC6004-AAJ R3",
+        "target": "2026-03-30",
+        "phase_0_plan": "2026-01-15",
+        "phase_0_close": "",
+        "phase_1_plan": "2026-03-21",
+        "phase_1_close": "",
+        "JDP_plan": "2026-05-30",
+        "JDP_close": "",
+        "status": "On Track",
+        "note": "진행사항 파악 필요"
     }
 ];
