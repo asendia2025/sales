@@ -80,9 +80,9 @@
             box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.15);
         }
 
-        /* Core Project Card Border Styles (Updated Logic) */
-        .border-fast { border: 2px solid #22c55e !important; } /* Green for On Track/Fast */
-        .border-slow { border: 2px solid #f97316 !important; } /* Orange for Delayed/Slow */
+        /* Core Project Card Border Styles */
+        .border-fast { border: 2px solid #22c55e !important; }
+        .border-slow { border: 2px solid #f97316 !important; }
         
         /* Traffic Light Colors */
         .light-green { background-color: #22c55e; box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
@@ -93,6 +93,12 @@
         .prog-green { background-color: #22c55e; }
         .prog-orange { background-color: #f97316; }
         .prog-gray { background-color: #e2e8f0; }
+
+        /* Status Backgrounds */
+        .bg-ontrack { background-color: #ecfdf5; color: #047857; }
+        .bg-delayed { background-color: #fef2f2; color: #b91c1c; }
+        .bg-critical { background-color: #fffbeb; color: #b45309; }
+        .bg-completed { background-color: #eff6ff; color: #1d4ed8; }
 
     </style>
 </head>
@@ -170,7 +176,6 @@
             <div class="max-w-7xl mx-auto space-y-8">
                 <!-- Summary Stats (White) -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <!-- Total -->
                     <div class="white-card p-5 rounded-2xl relative overflow-hidden transition-all duration-300 stat-card-hover group">
                         <div class="flex justify-between items-start z-10 relative">
                             <div>
@@ -182,7 +187,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Target -->
                     <div class="white-card p-5 rounded-2xl relative overflow-hidden transition-all duration-300 stat-card-hover group border-l-4 border-l-brand-500">
                         <div class="flex justify-between items-start z-10 relative">
                             <div>
@@ -194,7 +198,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Actual -->
                     <div class="white-card p-5 rounded-2xl relative overflow-hidden transition-all duration-300 stat-card-hover group">
                         <div class="flex justify-between items-start z-10 relative">
                             <div>
@@ -206,7 +209,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Share -->
                     <div class="white-card p-5 rounded-2xl relative overflow-hidden transition-all duration-300 stat-card-hover group bg-gradient-to-br from-brand-600 to-brand-700 border-none text-white">
                         <div class="flex justify-between items-start z-10 relative">
                             <div>
@@ -405,7 +407,7 @@
         let chartInstance;
         let activeMode = 'ASM'; 
         let currentStatusFilter = 'ALL'; 
-        let coreProjectFilter = 'Active'; // Default filter for Core Projects
+        let coreProjectFilter = 'Active'; 
 
         // Utils
         const toMillion = (val) => val / 1000000;
@@ -772,7 +774,15 @@
                 const startDateDisplay = p0Plan !== '-' ? p0Plan : 'TBD';
 
                 const card = document.createElement('div');
-                card.className = `white-card p-0 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden ${borderClass}`;
+                // Specific LDMOS Linking Logic
+                if (p.tasks && p.tasks.includes('LDMOS')) {
+                    card.className = `white-card p-0 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden ${borderClass} cursor-pointer hover:ring-2 hover:ring-brand-500`;
+                    card.onclick = function() {
+                        window.open('LDMOS 단종 현황 및 대응전략.html', '_blank');
+                    };
+                } else {
+                    card.className = `white-card p-0 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden ${borderClass}`;
+                }
                 
                 card.innerHTML = `
                     <div class="p-5 border-b border-slate-100">
