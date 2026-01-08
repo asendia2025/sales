@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>부품 단종 대응 전략 및 경영 보고</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 20px;
+            background-color: #f4f7f9;
+        }
+        .report-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h1 {
+            font-size: 26px;
+            color: #1e3a8a;
+            border-bottom: 3px solid #1e3a8a;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 19px;
+            color: #1e3a8a;
+            border-left: 5px solid #1e3a8a;
+            padding-left: 12px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .summary-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .summary-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .summary-item span.icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .status-table th, .status-table td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+        }
+        .status-table th {
+            background-color: #f1f5f9;
+            font-weight: 700;
+            width: 25%;
+        }
+        .highlight-red {
+            color: #e11d48;
+            font-weight: bold;
+        }
+        .highlight-blue {
+            color: #2563eb;
+            font-weight: bold;
+        }
+        .success-badge {
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            background: #f8fafc;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 4px solid #94a3b8;
+        }
+        .evc-box {
+            background-color: #fff1f2;
+            border: 1px solid #fecdd3;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 13px;
+            color: #64748b;
+            text-align: right;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="report-container">
+    <h1>핵심 부품(LDMOS) 단종 대응 전략 보고</h1>
+
+    <div class="summary-box">
+        <div class="summary-item">
+            <span class="icon">🏆</span>
+            <div><strong>협상 성과:</strong> NXP 단가 인상폭 획기적 방어 <span class="success-badge">300% → 40% 절감</span> (신동수 부장 기여)</div>
+        </div>
+        <div class="summary-item">
+            <span class="icon">⚠️</span>
+            <div><strong class="highlight-red">주요 리스크:</strong> 26년 수요 전망에 따른 재고 조기 소진 및 EVC 대체품 평가 지연</div>
+        </div>
+        <div class="summary-item">
+            <span class="icon">🚀</span>
+            <div><strong>대응 과제:</strong> 1월 내 제품가 인상 승인 완료 및 부서별 Outlook 기반 대응 체계 가동</div>
+        </div>
+    </div>
+
+    <h2>📌 1. 부품 수급 및 원가 관리 성과</h2>
+    <table class="status-table">
+        <tr>
+            <th>협상 성과</th>
+            <td>기존 300% 인상 요구안 → <strong>40% 인상으로 최종 합의</strong></td>
+        </tr>
+        <tr>
+            <th>핵심 기여</th>
+            <td><strong>전략구매부 신동수 부장</strong> (NXP 측과의 끈질긴 협상을 통한 MOQ 합의)</td>
+        </tr>
+        <tr>
+            <th>확보 현황</th>
+            <td>26년 12월 소요분 일괄 구매 완료 (1,500개 이상, 25년 생산량 기준)</td>
+        </tr>
+    </table>
+
+    <h2>🎯 2. 전사적 대응 과제 (Action Items)</h2>
+    <div style="background: #fdfdfd; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px;">
+        <ul style="margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 12px;">
+                <strong class="highlight-red">제품가 인상 반영 (시급):</strong> LDMOS 매입가 상승에 따른 제품 단가 인상 건 <br>
+                <span style="color: #666;">→ 1월 내 ASM 최종 승인 확보 필수</span>
+            </li>
+            <li style="margin-bottom: 12px;">
+                <strong>수요 예측 및 발주 (영업1팀):</strong> 2026년 ASM Outlook 조기 확보 <br>
+                <span style="color: #666;">→ 물량 급증 시 LTB 추가 물량 확보를 위한 선제적 대응</span>
+            </li>
+            <li>
+                <strong>대체 모델 개발 (연구2부):</strong> Ampleon LDMOS 적용 제품 개발 가속화 <br>
+                <span style="color: #666;">→ Phase 1 완료 기한 준수 (26/03/30)</span>
+            </li>
+        </ul>
+    </div>
+
+    <h2>⚙️ 3. 대체 모델(Ampleon) 개발 일정</h2>
+    <div class="timeline">
+        <div class="timeline-item" style="background: #f1f5f9;">
+            <span>Phase 0: 기획 및 디자인 검토</span>
+            <strong>완료 ('25/12/15)</strong>
+        </div>
+        <div class="timeline-item" style="border-left-color: #3b82f6;">
+            <span>Phase 1: 제품 개발 및 성능 평가</span>
+            <strong class="highlight-blue">진행 중 (~'26/03/30)</strong>
+        </div>
+        <div class="timeline-item">
+            <span>Phase 2: 변경점 신고(SCR) 및 협의 완료</span>
+            <strong>예정 (~'26/04/15)</strong>
+        </div>
+        <div class="timeline-item">
+            <span>Phase 3: JDP 완료</span>
+            <strong>예정 (~'26/11/30)</strong>
+        </div>
+    </div>
+
+    <h2>🚨 4. EVC TYKON 현황 및 대응 전략</h2>
+    <div class="evc-box">
+        <p style="margin-top: 0;"><strong>현 상태:</strong> <span class="highlight-red">대체품 평가 진행되지 않고 있음 (Risk)</span></p>
+        <hr style="border: 0; border-top: 1px solid #fecdd3; margin: 15px 0;">
+        <ol style="margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;"><strong>전략구매부:</strong> 현재 사용 중인 LDMOS의 추가 LTB 구매 가능 여부 공급사에 즉시 타진</li>
+            <li><strong>영업1팀:</strong> 2026년 ASM EVC Outlook 데이터 신속 확보</li>
+        </ol>
+        <p style="font-size: 0.9em; margin-top: 15px; color: #666;">* 보유 재고: 67개 (생산 50대 / 수리 17대 분)</p>
+    </div>
+
+    <div class="footer">
+        보고일자: 2026년 1월 8일 | 작성부서: Sales Team 1
+    </div>
+</div>
+
+</body>
+</html>
