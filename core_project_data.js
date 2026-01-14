@@ -16,7 +16,7 @@ window.coreProjectData = [
         "tasks": "LDMOS Alternative Development",
         "dept": "R&D",
         "category": "RFG",
-        "model": "Not Determined",
+        "model": "APG-2012HD, AGL-1004HD",
         "target": "2026-07-30",
         "phase_0_plan": "2026-01-10",
         "phase_0_close": "2026-01-10",
@@ -25,7 +25,7 @@ window.coreProjectData = [
         "JDP_plan": "2026-12-30",
         "JDP_close": "",
         "status": "On Track",
-        "note": "LDMOS 가격인상분 제품가 조정과 연계하여 진행"
+        "note": "SCR21 - EOL"
     },
 
     {
@@ -37,34 +37,34 @@ window.coreProjectData = [
         "phase_0_plan": "2026-01-09",
         "phase_0_close": "2026-01-08",
         "phase_1_plan": "2026-01-12",
-        "phase_1_close": "",
+        "phase_1_close": "2026-01-09",
         "JDP_plan": "2026-01-30",
         "JDP_close": "",
         "status": "On Track",
-        "note": "Official Letter 작성 진행 중"
+        "note": "Reviewing Official Letter By ASM Kristy"
     },
 
     {
-        "tasks": "Arius JQCM 60M RFG CIP",
+        "tasks": "Arius JQCM 60M RFG CIP (Robust Product x4U)",
         "dept": "R&D",
         "category": "RFG",
-        "model": "APG-2060HG",
+        "model": "APG-2060HG (Need to Assign Model Name)",
         "target": "2026-03-30",
         "phase_0_plan": "2026-01-15",
-        "phase_0_close": "",
+        "phase_0_close": "2026-01-13",
         "phase_1_plan": "2026-03-21",
         "phase_1_close": "",
         "JDP_plan": "2026-05-30",
         "JDP_close": "",
         "status": "On Track",
-        "note": "주간 진행사항 업데이트 필요"
+        "note": "모델명 선정 필요, 명절 전 견적제출 필요"
     },
 
     {
         "tasks": "Arius JQCM 60M RFM M to M 산포개선",
         "dept": "R&D",
         "category": "RFM",
-        "model": "AFC6004-AAJ R3",
+        "model": "AFD6004-AAJ R3",
         "target": "2026-03-30",
         "phase_0_plan": "2026-01-15",
         "phase_0_close": "",
@@ -73,6 +73,6 @@ window.coreProjectData = [
         "JDP_plan": "2026-05-30",
         "JDP_close": "",
         "status": "On Track",
-        "note": "주간 진행사항 업데이트 필요"
+        "note": "평가방안 ?"
     }
 ];
