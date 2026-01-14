@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>영업1팀 & 연구소</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+    body {
+        font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #000;
+        margin: 40px 20px;
+        background-color: #f0f2f5;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 24px;
+        border: 1px solid #e0e0e0;
+        padding: 60px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+    .header-logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .header-logo img {
+        max-width: 120px;
+        height: auto;
+    }
+    h1 {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #1a365d;
+        letter-spacing: -0.5px;
+        font-weight: 700;
+        color: #000;
+    }
+    .header-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 50px;
+        background-color: #fff;
+        border: 1px solid #cfcfcf;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .header-table th, .header-table td {
+        padding: 15px 20px;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .header-table tr:last-child th, 
+    .header-table tr:last-child td {
+        border-bottom: none;
+    }
+    .header-table th {
+        width: 130px;
+        background-color: #f8fafc;
+        font-weight: 700;
+        color: #000;
+        border-right: 1px solid #e2e8f0;
+    }
+    
+    .section {
+        margin-bottom: 30px;
+        padding: 30px;
+        background-color: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 16px;
+        transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    }
+    .section:last-child {
+        margin-bottom: 0;
+    }
+    
+    /* 제목을 클릭 가능한 버튼처럼 스타일링 */
+    .item-title {
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #000;
+        font-size: 17px;
+        display: flex;
+        align-items: center;
+        cursor: pointer; /* 클릭 커서 추가 */
+        justify-content: space-between; /* 화살표를 우측 끝으로 */
+        user-select: none; /* 텍스트 선택 방지 */
+    }
+    
+    /* 제목 앞쪽 파란색 바 */
+    .item-title .title-text {
+        display: flex;
+        align-items: center;
+    }
+    .item-title .title-text::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 20px;
+        background-color: #2b6cb0;
+        margin-right: 12px;
+        border-radius: 4px;
+    }
+
+    /* 접기/펼치기 화살표 아이콘 */
+    .toggle-icon {
+        width: 24px;
+        height: 24px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23999999'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: transform 0.3s ease;
+    }
+
+    /* 접혔을 때 스타일 */
+    .section.collapsed .toggle-icon {
+        transform: rotate(-90deg); /* 화살표 회전 */
+    }
+    .section.collapsed .content-wrapper {
+        display: none; /* 내용 숨김 */
+    }
+    .section.collapsed {
+        padding-bottom: 15px; /* 접혔을 때 하단 여백 줄임 */
+    }
+    .section.collapsed .item-title {
+        margin-bottom: 0; /* 접혔을 때 제목 하단 여백 제거 */
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 10px;
+        list-style-type: none;
+    }
+    ul li {
+        margin-bottom: 10px;
+        position: relative;
+        padding-left: 15px;
+    }
+    ul li::before {
+        content: "•";
+        color: #555;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+    }
+    .sub-list {
+        margin-top: 8px;
+        padding-left: 10px;
+        color: #333;
+        font-size: 0.95em;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #f0f0f0;
+    }
+    .sub-list li::before {
+        content: "-";
+        color: #777;
+    }
+    .highlight {
+        font-weight: 700;
+        color: #d32f2f;
+        background-color: #ffebee;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+    .footer {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 13px;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-logo">
+        <img src="https://raw.githubusercontent.com/asendia2025/sales/refs/heads/main/img/logo_company_transparency.png" alt="Asendia Logo">
+    </div>
+
+    <h1>영업1팀 / 연구소</h1>
+
+    <table class="header-table">
+        <tr>
+            <th>일시</th>
+            <td>1월 15일 (목요일) 09:00 - 10:00</td>
+        </tr>
+    </table>
+
+    <!-- Section 1 -->
+    <div class="section">
+        <div class="item-title" onclick="toggleSection(this)">
+            <span class="title-text">1. ARIUS JQCM VHF (60MHz) Robust RF Generator 개발</span>
+            <div class="toggle-icon"></div>
+        </div>
+        <div class="content-wrapper">
+            <ul>
+                <li><strong>1.1 ASM BU2 신동옥 상무님과의 결정사항 공유:</strong>
+                    <ul class="sub-list">
+                        <li>최종 4대를 준비 (3/31)</li>
+                        <li>평가결과를 정리하여 ASM BU2 신동옥 상무님과 평가결과 공유 회의 (3월 말)</li>
+                        <li>x1 Reactor 비교 평가 후 향후 방향 논의하기로</li>
+                    </ul>
+                </li>
+                <li><strong>1.2 영업부 요청사항:</strong>
+                    <ul class="sub-list">
+                        <li>모델명 선정 후 공유</li>
+                        <li>BOM 선정이 완료되면 견적산출 및 제출을 위한 정보공유</li>
+                        <li>평가결과를 POR vs. CIP 어떻게 비교 정리할 것인지 미리 고민하여 준비해 주세요.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section">
+        <div class="item-title" onclick="toggleSection(this)">
+            <span class="title-text">2. LDMOS 단종을 대비한 대체 제품 개발</span>
+            <div class="toggle-icon"></div>
+        </div>
+        <div class="content-wrapper">
+            <ul>
+                <li><strong>2.1 변경점신고 (SCR):</strong>
+                    <ul class="sub-list">
+                        <li>Category : <strong>SCR201 / EOL </strong></li>
+                        <li><strong>Required Documents </strong></li>
+                        <li>1) 변경 전·후의 사진자료 (연구2팀)</li>
+                        <li>2) 업체의 단종 공문 (전략구매부)</li>
+                        <li>3) 자재사양서 (전략구매부, 연구2팀)</li>
+                        <li>4) FAI_초도품목보고서 (연구2팀, 품질팀의 교육)</li>
+                        <li>5) 기존부품사양서 & 대체부품사양서 (전략구매부)</li>
+                        <li>6) 공정문서 (품질팀, 연구2팀 지원)</li>
+                    </ul>
+                </li>
+                <li><strong>2.2 영업부 요청사항:</strong>
+                    <ul class="sub-list">
+                        <li>준비된 자료는 품질팀에 전달하여 품질팀에서 최종 SCR 제안서 작성될 수 있도록 각 부서 협조</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section">
+        <div class="item-title" onclick="toggleSection(this)">
+            <span class="title-text">3. ASMJ 2MHz JQCM RF Matcher 평가제품 공급 건</span>
+            <div class="toggle-icon"></div>
+        </div>
+        <div class="content-wrapper">
+            <ul>
+                <li><strong>3.1 모델 확정 :</strong> AFD6002-AAJ R4</li>
+                <li><strong>3.2 수량 :</strong> 1 pcs</li>
+                <li><strong>3.3 영업부 요청사항:</strong>
+                    <ul class="sub-list">
+                        <li>신규모델 등록을 위한 사양서 (연구1팀 &rarr; 영업1팀)</li>
+                        <li>2월 중 견적산출 및 제출을 위한 BOM 공유 (연구1팀 &rarr; 영업1팀)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        작성일: 2026년 1월 14일
+    </div>
+</div>
+
+<script>
+    function toggleSection(headerElement) {
+        // 클릭된 헤더의 부모 요소(.section)를 찾음
+        const section = headerElement.parentElement;
+        // collapsed 클래스를 토글하여 접기/펼치기 상태 변경
+        section.classList.toggle('collapsed');
+    }
+</script>
+
+</body>
+</html>
