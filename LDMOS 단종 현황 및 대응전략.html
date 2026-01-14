@@ -1,211 +1,290 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>부품 단종 대응 전략 및 경영 보고</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 20px;
-            background-color: #f4f7f9;
-        }
-        .report-container {
-            max-width: 850px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-        h1 {
-            font-size: 26px;
-            color: #1e3a8a;
-            border-bottom: 3px solid #1e3a8a;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        h2 {
-            font-size: 19px;
-            color: #1e3a8a;
-            border-left: 5px solid #1e3a8a;
-            padding-left: 12px;
-            margin-top: 35px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        .summary-box {
-            background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-        .summary-item {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: flex-start;
-        }
-        .summary-item span.icon {
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-        .status-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        .status-table th, .status-table td {
-            border: 1px solid #e2e8f0;
-            padding: 14px;
-            text-align: left;
-        }
-        .status-table th {
-            background-color: #f1f5f9;
-            font-weight: 700;
-            width: 25%;
-        }
-        .highlight-red {
-            color: #e11d48;
-            font-weight: bold;
-        }
-        .highlight-blue {
-            color: #2563eb;
-            font-weight: bold;
-        }
-        .success-badge {
-            background-color: #dcfce7;
-            color: #166534;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-weight: bold;
-        }
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .timeline-item {
-            display: flex;
-            justify-content: space-between;
-            background: #f8fafc;
-            padding: 10px 15px;
-            border-radius: 6px;
-            border-left: 4px solid #94a3b8;
-        }
-        .evc-box {
-            background-color: #fff1f2;
-            border: 1px solid #fecdd3;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .footer {
-            margin-top: 50px;
-            font-size: 13px;
-            color: #64748b;
-            text-align: right;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>영업1부 & 연구소 주간미팅</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+    body {
+        font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #000;
+        margin: 40px 20px;
+        background-color: #f0f2f5;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 24px;
+        border: 1px solid #e0e0e0;
+        padding: 60px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+    .header-logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .header-logo img {
+        max-width: 120px;
+        height: auto;
+    }
+    h1 {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #1a365d;
+        letter-spacing: -0.5px;
+        font-weight: 700;
+        color: #000;
+    }
+    .header-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 50px;
+        background-color: #fff;
+        border: 1px solid #cfcfcf;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .header-table th, .header-table td {
+        padding: 15px 20px;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .header-table tr:last-child th, 
+    .header-table tr:last-child td {
+        border-bottom: none;
+    }
+    .header-table th {
+        width: 130px;
+        background-color: #f8fafc;
+        font-weight: 700;
+        color: #000;
+        border-right: 1px solid #e2e8f0;
+    }
+    
+    .section {
+        margin-bottom: 30px;
+        padding: 30px;
+        background-color: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 16px;
+        transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    }
+    .section:last-child {
+        margin-bottom: 0;
+    }
+    
+    /* 제목을 클릭 가능한 버튼처럼 스타일링 */
+    .item-title {
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #000;
+        font-size: 17px;
+        display: flex;
+        align-items: center;
+        cursor: pointer; /* 클릭 커서 추가 */
+        justify-content: space-between; /* 화살표를 우측 끝으로 */
+        user-select: none; /* 텍스트 선택 방지 */
+    }
+    
+    /* 제목 앞쪽 파란색 바 */
+    .item-title .title-text {
+        display: flex;
+        align-items: center;
+    }
+    .item-title .title-text::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 20px;
+        background-color: #2b6cb0;
+        margin-right: 12px;
+        border-radius: 4px;
+    }
+
+    /* 접기/펼치기 화살표 아이콘 */
+    .toggle-icon {
+        width: 24px;
+        height: 24px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23999999'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: transform 0.3s ease;
+    }
+
+    /* 접혔을 때 스타일 */
+    .section.collapsed .toggle-icon {
+        transform: rotate(-90deg); /* 화살표 회전 */
+    }
+    .section.collapsed .content-wrapper {
+        display: none; /* 내용 숨김 */
+    }
+    .section.collapsed {
+        padding-bottom: 15px; /* 접혔을 때 하단 여백 줄임 */
+    }
+    .section.collapsed .item-title {
+        margin-bottom: 0; /* 접혔을 때 제목 하단 여백 제거 */
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 10px;
+        list-style-type: none;
+    }
+    ul li {
+        margin-bottom: 10px;
+        position: relative;
+        padding-left: 15px;
+    }
+    ul li::before {
+        content: "•";
+        color: #555;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+    }
+    .sub-list {
+        margin-top: 8px;
+        padding-left: 10px;
+        color: #333;
+        font-size: 0.95em;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #f0f0f0;
+    }
+    .sub-list li::before {
+        content: "-";
+        color: #777;
+    }
+    .highlight {
+        font-weight: 700;
+        color: #d32f2f;
+        background-color: #ffebee;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+    .footer {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 13px;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+</style>
 </head>
 <body>
 
-<div class="report-container">
-    <h1>핵심 부품(LDMOS) 단종 대응 전략 보고</h1>
-
-    <div class="summary-box">
-        <div class="summary-item">
-            <span class="icon">🏆</span>
-            <div><strong>협상 성과:</strong> NXP 단가 인상폭 획기적 방어 <span class="success-badge">300% → 40% 절감</span> (신동수 부장 기여)</div>
-        </div>
-        <div class="summary-item">
-            <span class="icon">⚠️</span>
-            <div><strong class="highlight-red">주요 리스크:</strong> 26년 수요 전망에 따른 재고 조기 소진 및 EVC 대체품 평가 지연</div>
-        </div>
-        <div class="summary-item">
-            <span class="icon">🚀</span>
-            <div><strong>대응 과제:</strong> 1월 내 제품가 인상 승인 완료 및 부서별 Outlook 기반 대응 체계 가동</div>
-        </div>
+<div class="container">
+    <div class="header-logo">
+        <img src="https://raw.githubusercontent.com/asendia2025/sales/refs/heads/main/img/logo_company_transparency.png" alt="Asendia Logo">
     </div>
 
-    <h2>📌 1. 부품 수급 및 원가 관리 성과</h2>
-    <table class="status-table">
+    <h1>영업1팀 / 연구소</h1>
+
+    <table class="header-table">
         <tr>
-            <th>협상 성과</th>
-            <td>기존 300% 인상 요구안 → <strong>40% 인상으로 최종 합의</strong></td>
-        </tr>
-        <tr>
-            <th>핵심 기여</th>
-            <td><strong>전략구매부 신동수 부장</strong> (NXP 측과의 끈질긴 협상을 통한 MOQ 합의)</td>
-        </tr>
-        <tr>
-            <th>확보 현황</th>
-            <td>26년 12월 소요분 일괄 구매 완료 (1,500개 이상, 25년 생산량 기준)</td>
+            <th>일시</th>
+            <td>1월 15일 (목요일) 09:00 - 10:00</td>
         </tr>
     </table>
 
-    <h2>🎯 2. 전사적 대응 과제 (Action Items)</h2>
-    <div style="background: #fdfdfd; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px;">
-        <ul style="margin: 0; padding-left: 20px;">
-            <li style="margin-bottom: 12px;">
-                <strong class="highlight-red">제품가 인상 반영 (시급):</strong> LDMOS 매입가 상승에 따른 제품 단가 인상 건 <br>
-                <span style="color: #666;">→ 1월 내 ASM 최종 승인 확보 필수</span>
-            </li>
-            <li style="margin-bottom: 12px;">
-                <strong>수요 예측 및 발주 (영업1팀):</strong> 2026년 ASM Outlook 조기 확보 <br>
-                <span style="color: #666;">→ 물량 급증 시 LTB 추가 물량 확보를 위한 선제적 대응</span>
-            </li>
-            <li>
-                <strong>대체 모델 개발 (연구2부):</strong> Ampleon LDMOS 적용 제품 개발 가속화 <br>
-                <span style="color: #666;">→ Phase 1 완료 기한 준수 (26/03/30)</span>
-            </li>
-        </ul>
-    </div>
-
-    <h2>⚙️ 3. 대체 모델(Ampleon) 개발 일정</h2>
-    <div class="timeline">
-        <div class="timeline-item" style="background: #f1f5f9;">
-            <span>Phase 0: 기획 및 디자인 검토</span>
-            <strong>완료 ('25/12/15)</strong>
+    <!-- Section 1 -->
+    <div class="section">
+        <div class="item-title" onclick="toggleSection(this)">
+            <span class="title-text">1. ARIUS JQCM VHF (60MHz) Robust RF Generator 개발</span>
+            <div class="toggle-icon"></div>
         </div>
-        <div class="timeline-item" style="border-left-color: #3b82f6;">
-            <span>Phase 1: 제품 개발 및 성능 평가</span>
-            <strong class="highlight-blue">진행 중 (~'26/03/30)</strong>
-        </div>
-        <div class="timeline-item">
-            <span>Phase 2: 변경점 신고(SCR) 및 협의 완료</span>
-            <strong>예정 (~'26/04/15)</strong>
-        </div>
-        <div class="timeline-item">
-            <span>Phase 3: JDP 완료</span>
-            <strong>예정 (~'26/11/30)</strong>
+        <div class="content-wrapper">
+            <ul>
+                <li><strong>1.1 ASM BU2 신동옥 상무님과의 결정사항 공유:</strong>
+                    <ul class="sub-list">
+                        <li>최종 4대를 준비 (3/31)</li>
+                        <li>평가결과를 정리하여 ASM BU2 신동옥 상무님과 평가결과 공유 회의 (3월 말)</li>
+                        <li>x1 Reactor 비교 평가 후 향후 방향 논의하기로</li>
+                    </ul>
+                </li>
+                <li><strong>1.2 영업부 요청사항:</strong>
+                    <ul class="sub-list">
+                        <li>모델명 선정 후 공유</li>
+                        <li>BOM 선정이 완료되면 견적산출 및 제출을 위한 정보공유</li>
+                        <li>평가결과를 POR vs. CIP 어떻게 비교 정리할 것인지 미리 고민하여 준비해 주세요.</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 
-    <h2>🚨 4. EVC TYKON 현황 및 대응 전략</h2>
-    <div class="evc-box">
-        <p style="margin-top: 0;"><strong>현 상태:</strong> <span class="highlight-red">대체품 평가 진행되지 않고 있음 (Risk)</span></p>
-        <hr style="border: 0; border-top: 1px solid #fecdd3; margin: 15px 0;">
-        <ol style="margin: 0; padding-left: 20px;">
-            <li style="margin-bottom: 8px;"><strong>전략구매부:</strong> 현재 사용 중인 LDMOS의 추가 LTB 구매 가능 여부 공급사에 즉시 타진</li>
-            <li><strong>영업1팀:</strong> 2026년 ASM EVC Outlook 데이터 신속 확보</li>
-        </ol>
-        <p style="font-size: 0.9em; margin-top: 15px; color: #666;">* 보유 재고: 67개 (생산 50대 / 수리 17대 분)</p>
+    <!-- Section 2 -->
+    <div class="section">
+        <div class="item-title" onclick="toggleSection(this)">
+            <span class="title-text">2. LDMOS 단종을 대비한 대체 제품 개발</span>
+            <div class="toggle-icon"></div>
+        </div>
+        <div class="content-wrapper">
+            <ul>
+                <li><strong>2.1 변경점신고 (SCR):</strong>
+                    <ul class="sub-list">
+                        <li>Category : <strong>SCR201 / EOL </strong></li>
+                        <li><strong>Required Documents </strong></li>
+                        <li>1) 변경 전·후의 사진자료 (연구2팀)</li>
+                        <li>2) 업체의 단종 공문 (전략구매부)</li>
+                        <li>3) 자재사양서 (전략구매부, 연구2팀)</li>
+                        <li>4) FAI_초도품목보고서 (연구2팀, 품질팀의 교육)</li>
+                        <li>5) 기존부품사양서 & 대체부품사양서 (전략구매부)</li>
+                        <li>6) 공정문서 (품질팀, 연구2팀 지원)</li>
+                    </ul>
+                </li>
+                <li><strong>2.2 영업부 요청사항:</strong>
+                    <ul class="sub-list">
+                        <li>준비된 자료는 품질팀에 전달하여 품질팀에서 최종 SCR 제안서 작성될 수 있도록 각 부서 협조</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section">
+        <div class="item-title" onclick="toggleSection(this)">
+            <span class="title-text">3. ASMJ 2MHz JQCM RF Matcher 평가제품 공급 건</span>
+            <div class="toggle-icon"></div>
+        </div>
+        <div class="content-wrapper">
+            <ul>
+                <li><strong>3.1 모델 확정 :</strong> AFD6002-AAJ R4</li>
+                <li><strong>3.2 수량 :</strong> 1 pcs</li>
+                <li><strong>3.3 영업부 요청사항:</strong>
+                    <ul class="sub-list">
+                        <li>신규모델 등록을 위한 사양서 (연구1팀 &rarr; 영업1팀)</li>
+                        <li>2월 중 견적산출 및 제출을 위한 BOM 공유 (연구1팀 &rarr; 영업1팀)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="footer">
-        보고일자: 2026년 1월 8일 | 작성부서: Sales Team 1
+        작성일: 2026년 1월 14일
     </div>
 </div>
+
+<script>
+    function toggleSection(headerElement) {
+        // 클릭된 헤더의 부모 요소(.section)를 찾음
+        const section = headerElement.parentElement;
+        // collapsed 클래스를 토글하여 접기/펼치기 상태 변경
+        section.classList.toggle('collapsed');
+    }
+</script>
 
 </body>
 </html>
