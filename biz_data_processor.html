@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Performance Data Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Varela+Round&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Varela Round"', '"Noto Sans KR"', 'sans-serif'],
+                        noto: ['"Noto Sans KR"', 'sans-serif']
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky 500
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .varela { font-family: 'Varela Round', sans-serif; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="database" class="w-6 h-6 text-brand-600"></i>
+                <h1 class="text-xl font-bold tracking-tight text-slate-800">
+                    Sales Data <span class="text-brand-600">Converter</span>
+                </h1>
+            </div>
+            <div class="text-sm text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full">
+                영업부 데이터 표준화 도구
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-6 max-w-7xl mx-auto w-full space-y-6">
+        
+        <!-- Step 1: Upload & Settings -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all hover:shadow-md">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <span class="bg-brand-100 text-brand-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                설정 및 데이터 업로드
+            </h2>
+
+            <!-- Year Selection -->
+            <div class="mb-4 bg-slate-50 p-4 rounded-lg border border-slate-200 flex items-center gap-4">
+                <label for="targetYear" class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                    <i data-lucide="calendar" class="w-4 h-4 text-brand-600"></i>
+                    대상 연도 (Target Year)
+                </label>
+                <input type="number" id="targetYear" class="w-32 px-3 py-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 font-bold text-slate-700 text-center" />
+                <span class="text-xs text-slate-400">* 변환될 데이터의 기준 연도를 선택하세요.</span>
+            </div>
+
+            <!-- Drop Zone -->
+            <div class="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center hover:bg-brand-50 hover:border-brand-300 transition-colors cursor-pointer relative" id="dropZone">
+                <input type="file" id="csvInput" accept=".csv" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                <div class="space-y-2 pointer-events-none">
+                    <i data-lucide="upload-cloud" class="w-10 h-10 text-slate-400 mx-auto"></i>
+                    <p class="text-slate-600 font-medium">경영지원실 엑셀(CSV) 파일을 여기에 드래그하거나 클릭하세요</p>
+                    <p class="text-xs text-slate-400">지원 형식: .csv (UTF-8 권장)</p>
+                </div>
+            </div>
+            <div id="fileInfo" class="mt-3 hidden items-center gap-2 text-sm text-green-600 bg-green-50 p-2 rounded">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                <span id="fileName">filename.csv</span>
+            </div>
+        </section>
+
+        <!-- Step 2: Preview & Transform -->
+        <section id="resultSection" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hidden">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold flex items-center gap-2">
+                    <span class="bg-brand-100 text-brand-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                    변환 결과 미리보기
+                </h2>
+                <div class="text-sm text-slate-500">
+                    총 <span id="totalRows" class="font-bold text-brand-600">0</span>건의 데이터 생성됨
+                </div>
+            </div>
+
+            <!-- Stats/Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    <div class="text-xs text-slate-500 mb-1">총 매출액 (Total Sales)</div>
+                    <div class="text-xl font-bold text-slate-800" id="statTotalSales">0 ₩</div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    <div class="text-xs text-slate-500 mb-1">데이터 기간 (Period)</div>
+                    <div class="text-xl font-bold text-slate-800"><span id="displayYear">2025</span> Jan - Dec</div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    <div class="text-xs text-slate-500 mb-1">변환 상태</div>
+                    <div class="text-sm font-medium text-green-600 flex items-center gap-1">
+                        <i data-lucide="check" class="w-4 h-4"></i> 정규화 완료
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-[400px]">
+                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                    <thead class="bg-slate-50 sticky top-0 z-10">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Year</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Month</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Customer (Std)</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Category</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Type</th>
+                            <th class="px-4 py-3 text-right font-semibold text-slate-600">Amount (KRW)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="previewBody" class="divide-y divide-slate-100 bg-white">
+                        <!-- Rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Step 3: Download -->
+        <section id="actionSection" class="hidden flex flex-col sm:flex-row gap-4 justify-end">
+            <button onclick="downloadCSV()" class="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 hover:border-slate-400 transition-all shadow-sm">
+                <i data-lucide="file-spreadsheet" class="w-5 h-5 text-green-600"></i>
+                Download CSV
+            </button>
+            <button onclick="downloadJS()" id="btnDownloadJS" class="flex items-center justify-center gap-2 px-6 py-3 bg-brand-600 rounded-lg text-white font-medium hover:bg-brand-700 transition-all shadow-md hover:shadow-lg">
+                <i data-lucide="code" class="w-5 h-5"></i>
+                Download JS File
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        // --- 1. State Management ---
+        let processedData = [];
+        let rawDataCache = null; // 원본 데이터를 저장해두어 연도 변경 시 재처리
+        let selectedYear = new Date().getFullYear(); // 기본값: 현재 연도
+
+        // Init UI
+        document.getElementById('targetYear').value = selectedYear;
+
+        // Event Listener: Year Change
+        document.getElementById('targetYear').addEventListener('change', function(e) {
+            const val = parseInt(e.target.value);
+            if(val && val > 1900 && val < 2100) {
+                selectedYear = val;
+                // 파일이 이미 업로드되어 있다면 데이터를 다시 처리하고 갱신
+                if(rawDataCache) {
+                    processRawData(rawDataCache);
+                }
+            }
+        });
+
+        // --- 2. Mapping Rules (The Brain) ---
+        const mapCustomer = (rawName) => {
+            if (!rawName) return "Unknown";
+            const name = rawName.trim().toUpperCase().replace(/\s+/g, ''); // 공백제거 및 대문자화 비교
+
+            // 2.1 삼성
+            if (['삼성전자', '삼성물산', 'SECAUSTIN'].includes(name) || name.includes('삼성전자')) return '삼성전자반도체사업부';
+            // 2.2 SK
+            if (name.includes('SKHYNIX')) return 'SK HYNIX';
+            // 2.3 주성
+            if (name.includes('주성')) return '주성';
+            // 2.4 원익
+            if (name.includes('원익IPS') || name.includes('WONIK')) return '원익IPS';
+            // 2.5 ASM OEM
+            if (name.includes('ASMK') || name.includes('ASMFEMS') || name.includes('ASMJ')) return 'ASM_OEM';
+            // 2.6 PSK
+            if (name.includes('PSK')) return 'PSK(H)';
+            // 2.7 ASM CM
+            if (name.includes('ASM') && name.includes('SPM')) return 'ASM_CM'; 
+            
+            // 2.8 Others 
+            if (['소로나', '아이작리서치', '아이엠', 'ELOB', 'ADTEC', 'OTHER'].includes(name)) return 'Others';
+
+            return rawName.trim(); 
+        };
+
+        const mapItem = (rawItem) => {
+            if (!rawItem) return { category: 'Unknown', type: 'Unknown' };
+            const item = rawItem.trim();
+            const upperItem = item.toUpperCase();
+
+            // 3.1 ~ 3.3 Sales Types
+            if (item === 'RF GEN') return { category: 'Sales', type: 'Sales_RFG' };
+            if (item === 'RF M/B') return { category: 'Sales', type: 'Sales_RFM' };
+            if (item === 'RF Modify') return { category: 'Sales', type: 'Sales_Mod' };
+            if (item === 'RFG & MB') return { category: 'Sales', type: 'Sales_RFG' }; 
+            
+            // OTHERS, 전자장비, ETC -> Category: Sales, Type: Sales_Comm
+            if (upperItem.includes('OTHERS') || upperItem.includes('OTHER') || 
+                upperItem.includes('ETC') || item.includes('전자장비')) {
+                return { category: 'Sales', type: 'Sales_Comm' }; 
+            }
+
+            // 3.4 ~ 3.9 Repair Types
+            if (item === 'GEN Repair' || item === 'Gen Repair') return { category: 'Repair', type: 'Repair_RFG' }; 
+            if (item === 'M/B Repair' || item === 'MB Repair') return { category: 'Repair', type: 'Repair_RFM' }; 
+            if (item === 'Repair') return { category: 'Repair', type: 'Repair_RFM' }; 
+
+            return { category: 'Etc', type: item };
+        };
+
+        const monthMap = {
+            'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'JUN': 6, 
+            'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12
+        };
+
+        // --- 3. Processing Logic ---
+        document.getElementById('csvInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileInfo').classList.remove('hidden');
+            document.getElementById('fileInfo').classList.add('flex');
+
+            Papa.parse(file, {
+                header: false,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    rawDataCache = results.data; // Cache raw data
+                    processRawData(results.data);
+                }
+            });
+        });
+
+        function processRawData(rows) {
+            processedData = []; // Reset
+            let lastBizUnit = '';
+            let lastCustomer = '';
+
+            // Find Header Row Index
+            let headerIdx = -1;
+            for(let i=0; i<rows.length; i++) {
+                const rowStr = rows[i].join(' ').toUpperCase();
+                if(rowStr.includes('COMPANY') && rowStr.includes('ITEM')) {
+                    headerIdx = i;
+                    break;
+                }
+            }
+
+            if(headerIdx === -1) {
+                alert("유효한 데이터 헤더를 찾을 수 없습니다.");
+                return;
+            }
+
+            const monthStartIdx = 3;
+
+            // Iterate Data Rows
+            for(let i = headerIdx + 1; i < rows.length; i++) {
+                const row = rows[i];
+                
+                // 1. Fill Down Logic
+                const rawBiz = row[0] ? row[0].trim() : '';
+                const rawCust = row[1] ? row[1].trim() : '';
+                const rawItem = row[2] ? row[2].trim() : '';
+
+                if (!rawItem && !rawBiz && !rawCust) continue; 
+                
+                // Skip Summary Rows
+                const skipKeywords = ['TOTAL', 'S-TOTAL', 'G-TOTAL', '합계'];
+                const isSkipRow = [rawBiz, rawCust, rawItem].some(val => {
+                    if (!val) return false;
+                    const upper = val.toUpperCase();
+                    return skipKeywords.some(key => upper.includes(key));
+                });
+
+                if (isSkipRow) continue;
+
+                // Update context
+                if(rawBiz) lastBizUnit = rawBiz; 
+                if(rawCust) lastCustomer = rawCust;
+
+                if(!rawItem) continue;
+
+                // 2. Apply Mapping Rules
+                const stdCustomer = mapCustomer(lastCustomer); 
+                const itemInfo = mapItem(rawItem); 
+
+                // 3. Extract Monthly Data (Unpivot)
+                const monthKeys = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                
+                monthKeys.forEach((monthKey, idx) => {
+                    const colIdx = monthStartIdx + idx;
+                    let amountStr = row[colIdx];
+                    
+                    let amount = 0;
+                    if(amountStr) {
+                        amount = parseFloat(amountStr.toString().replace(/,/g, ''));
+                    }
+
+                    if(!isNaN(amount) && amount !== 0) {
+                        processedData.push({
+                            year: selectedYear, // Use the dynamically selected year
+                            month: monthMap[monthKey],
+                            monthName: monthKey,
+                            customer: stdCustomer,
+                            originalCustomer: lastCustomer,
+                            category: itemInfo.category,
+                            type: itemInfo.type,
+                            item: rawItem,
+                            amount: amount
+                        });
+                    }
+                });
+            }
+
+            renderPreview();
+        }
+
+        function renderPreview() {
+            const tbody = document.getElementById('previewBody');
+            tbody.innerHTML = '';
+            
+            let totalSales = 0;
+            const previewLimit = 100;
+
+            // Update stats UI
+            document.getElementById('displayYear').textContent = selectedYear;
+
+            processedData.forEach((row, index) => {
+                totalSales += row.amount;
+                
+                if(index < previewLimit) {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50 transition-colors";
+                    tr.innerHTML = `
+                        <td class="px-4 py-3 text-slate-500 font-bold">${row.year}</td>
+                        <td class="px-4 py-3 text-slate-800 font-medium">${row.month}월 (${row.monthName})</td>
+                        <td class="px-4 py-3 text-slate-800">
+                            <span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-xs font-bold mr-2">${row.customer}</span>
+                            <span class="text-xs text-slate-400">(${row.originalCustomer})</span>
+                        </td>
+                        <td class="px-4 py-3 text-slate-600">${row.category}</td>
+                        <td class="px-4 py-3 text-slate-600">
+                            <div class="font-medium">${row.type}</div>
+                            <div class="text-xs text-slate-400">${row.item}</div>
+                        </td>
+                        <td class="px-4 py-3 text-right font-mono text-slate-700">${row.amount.toLocaleString()}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            document.getElementById('totalRows').innerText = processedData.length.toLocaleString();
+            document.getElementById('statTotalSales').innerText = Math.round(totalSales).toLocaleString() + " ₩";
+            
+            document.getElementById('resultSection').classList.remove('hidden');
+            document.getElementById('actionSection').classList.remove('hidden');
+            document.getElementById('actionSection').classList.add('flex');
+
+            // Update Download Button Text dynamically
+            const btn = document.getElementById('btnDownloadJS');
+            btn.innerHTML = `<i data-lucide="code" class="w-5 h-5"></i> Download JS (sales_data_${selectedYear}.js)`;
+
+            lucide.createIcons();
+        }
+
+        // --- 4. Export Functions ---
+
+        function downloadCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+            csvContent += "Year,Month,Customer,Category,Type,Original_Item,Amount\n";
+
+            processedData.forEach(row => {
+                const rowStr = [
+                    row.year,
+                    row.month,
+                    row.customer,
+                    row.category,
+                    row.type,
+                    row.item.replace(/,/g, ' '), 
+                    row.amount
+                ].join(",");
+                csvContent += rowStr + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            // Dynamic Filename
+            link.setAttribute("download", `sales_performance_${selectedYear}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function downloadJS() {
+            const cleanData = processedData.map(({year, month, customer, category, type, amount}) => ({
+                year, month, customer, category, type, amount
+            }));
+
+            // Dynamic Variable Name construction
+            const variableName = `salesData${selectedYear}`;
+
+            const jsContent = `/**
+ * ${selectedYear}년 매출 실적 데이터
+ */
+window.${variableName} = ${JSON.stringify(cleanData, null, 2)};
+`;
+
+            const blob = new Blob([jsContent], { type: "text/javascript" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            // Dynamic Filename
+            link.download = `sales_data_${selectedYear}.js`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
