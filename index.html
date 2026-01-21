@@ -116,270 +116,327 @@
         .project-card-amber { border-color: #f59e0b; }  
         .project-card-emerald { border-color: #10b981; } 
 
+        /* Spinner for Button */
+        .spinner {
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 2px solid white;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="flex h-screen bg-slate-50 text-slate-900">
+<body class="bg-slate-50 text-slate-900">
 
-    <!-- Sidebar -->
-    <aside class="sidebar w-64 flex flex-col z-20 px-4">
-        <div class="py-6 flex items-center gap-3 border-b border-slate-100 mb-4">
-            <div class="w-10 h-10 flex items-center justify-center bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-                <img src="https://github.com/asendia2025/sales/blob/main/img/logo_company_transparency.png?raw=true" alt="Company Logo" class="w-full h-full object-contain p-1">
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900">
+        <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md text-center border border-slate-200">
+            <div class="mb-6 flex justify-center">
+                 <div class="w-16 h-16 flex items-center justify-center bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden p-2">
+                    <img src="https://github.com/asendia2025/sales/blob/main/img/logo_company_transparency.png?raw=true" alt="Company Logo" class="w-full h-full object-contain">
+                </div>
             </div>
-            <div>
-                <h1 class="font-montserrat font-bold text-lg text-slate-900 leading-tight tracking-tight">ASENDIA</h1>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">Sales Team 1</p>
-            </div>
-        </div>
+            <h1 class="text-2xl font-bold text-slate-800 font-montserrat mb-2">Sales System</h1>
+            <p class="text-slate-500 text-sm mb-8">Sales Index & Project Dashboard Login</p>
 
-        <nav class="flex-1 space-y-1 overflow-y-auto custom-scrollbar">
-            <p class="px-2 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Main Modules</p>
-            <a onclick="switchModule('sales')" id="nav-sales" class="nav-item active flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                <i data-lucide="trending-up" class="w-5 h-5"></i>
-                <span>Sales Performance</span>
-            </a>
-            <a onclick="switchModule('project')" id="nav-project" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                <i data-lucide="box" class="w-5 h-5"></i>
-                <span>ASM Project Mgmt</span>
-            </a>
-            <a onclick="switchModule('core')" id="nav-core" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                <i data-lucide="star" class="w-5 h-5"></i>
-                <span>ASM Core Project</span>
-            </a>
-            <a class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium opacity-50 cursor-not-allowed">
-                <i data-lucide="users" class="w-5 h-5"></i>
-                <span>ASM Customer Mgmt</span>
-                <span class="ml-auto text-[10px] bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-slate-400">Soon</span>
-            </a>
-            <p class="px-2 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-4">Settings</p>
-            <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                <i data-lucide="settings" class="w-5 h-5"></i>
-                <span>System Settings</span>
-            </a>
-            <a href="biz_data_processor.html" target="_blank" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                <i data-lucide="database" class="w-5 h-5"></i>
-                <span>Business Data Processor</span>
-            </a>
-        </nav>
-
-        <div class="py-4 mt-auto border-t border-slate-100">
-            <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer">
-                <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs">
-                    ST
+            <form id="login-form" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all" placeholder="name@company.com" required>
                 </div>
                 <div>
-                    <p class="text-xs font-bold text-slate-700">Sales Team 1</p>
-                    <p class="text-[10px] text-slate-500">Administrator</p>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all" placeholder="••••••••" required>
                 </div>
+                <button type="submit" id="login-btn" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                    <span class="btn-text">Sign In</span>
+                </button>
+            </form>
+
+            <div class="mt-4">
+                <a href="#" id="forgot-pw-btn" class="text-sm text-slate-400 hover:text-brand-600 transition-colors font-medium">Forgot Password?</a>
             </div>
+
+            <div id="error-message" class="mt-4 text-rose-500 text-sm font-medium hidden"></div>
         </div>
-    </aside>
+    </div>
 
-    <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col overflow-hidden relative">
-        <!-- Header -->
-        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shrink-0 z-10">
-            <h2 id="header-title" class="font-bold text-slate-800 flex items-center gap-2">
-                <i data-lucide="pie-chart" class="w-5 h-5 text-brand-700"></i>
-                Integrated Sales Dashboard
-            </h2>
-            <div id="header-actions" class="flex items-center gap-2">
-                <div class="bg-slate-100 rounded-lg p-1 flex border border-slate-200">
-                    <button id="mode-all" onclick="switchSalesMode('ALL')" class="px-4 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700 border border-slate-100 transition-all">ASENDIA</button>
-                    <button id="mode-sales1" onclick="switchSalesMode('SALES1')" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all">Sales 1</button>
-                    <button id="mode-sales2" onclick="switchSalesMode('SALES2')" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all">Sales 2</button>
-                    <button id="mode-service" onclick="switchSalesMode('SERVICE')" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all">Service</button>
+    <!-- App Container (Hidden by default) -->
+    <div id="app-container" class="flex h-screen bg-slate-50 text-slate-900 hidden">
+
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 flex flex-col z-20 px-4">
+            <div class="py-6 flex items-center gap-3 border-b border-slate-100 mb-4">
+                <div class="w-10 h-10 flex items-center justify-center bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                    <img src="https://github.com/asendia2025/sales/blob/main/img/logo_company_transparency.png?raw=true" alt="Company Logo" class="w-full h-full object-contain p-1">
+                </div>
+                <div>
+                    <h1 class="font-montserrat font-bold text-lg text-slate-900 leading-tight tracking-tight">ASENDIA</h1>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">Sales Team 1</p>
                 </div>
             </div>
-        </header>
 
-        <!-- Module: Sales Dashboard -->
-        <div id="module-sales" class="flex-1 overflow-y-auto custom-scrollbar p-8 block relative z-0">
-            <div class="max-w-7xl mx-auto space-y-8">
-                
-                <!-- Filters Section -->
-                <div class="white-card p-4 rounded-2xl flex gap-6 items-center flex-wrap" id="sales-filters-container">
-                    <div class="flex items-center gap-2" id="customer-filter-group">
-                         <span class="text-sm font-bold text-slate-500 flex items-center gap-2">
-                            <i data-lucide="filter" class="w-4 h-4"></i> Customer:
-                        </span>
-                        <select id="filter-customer" class="text-sm border rounded-lg px-3 py-2 cursor-pointer hover:bg-slate-50 min-w-[200px]">
-                            <option value="ALL">All Customers</option>
-                        </select>
+            <nav class="flex-1 space-y-1 overflow-y-auto custom-scrollbar">
+                <p class="px-2 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Main Modules</p>
+                <a onclick="switchModule('sales')" id="nav-sales" class="nav-item active flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    <span>Sales Performance</span>
+                </a>
+                <a onclick="switchModule('project')" id="nav-project" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                    <i data-lucide="box" class="w-5 h-5"></i>
+                    <span>ASM Project Mgmt</span>
+                </a>
+                <a onclick="switchModule('core')" id="nav-core" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                    <i data-lucide="star" class="w-5 h-5"></i>
+                    <span>ASM Core Project</span>
+                </a>
+                <a class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium opacity-50 cursor-not-allowed">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>ASM Customer Mgmt</span>
+                    <span class="ml-auto text-[10px] bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-slate-400">Soon</span>
+                </a>
+                <p class="px-2 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-4">Settings</p>
+                <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    <span>System Settings</span>
+                </a>
+                <!-- Sign Out / Change PW Added -->
+                <a href="#" id="change-pw-btn" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                    <span>Change Password</span>
+                </a>
+                <a href="#" id="logout-btn" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-rose-500 hover:bg-rose-50 hover:text-rose-600">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                    <span>Sign Out</span>
+                </a>
+
+                <a href="biz_data_processor.html" target="_blank" class="nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium mt-4 border-t border-slate-100 pt-4">
+                    <i data-lucide="database" class="w-5 h-5"></i>
+                    <span>Business Data Processor</span>
+                </a>
+            </nav>
+
+            <div class="py-4 mt-auto border-t border-slate-100">
+                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer">
+                    <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs">
+                        ST
                     </div>
+                    <div class="overflow-hidden">
+                        <p class="text-xs font-bold text-slate-700 truncate" id="user-email-display">Sales Team 1</p>
+                        <p class="text-[10px] text-slate-500">Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
 
-                    <!-- Category Buttons -->
-                    <div class="flex items-center gap-2" id="category-filter-group">
-                        <span class="text-sm font-bold text-slate-500 flex items-center gap-2 mr-1">
-                            <i data-lucide="layers" class="w-4 h-4"></i> Category:
-                        </span>
-                        <div class="flex bg-slate-100 p-1 rounded-lg border border-slate-200">
-                            <button onclick="setSalesCategoryFilter('ALL')" id="btn-cat-all" class="px-3 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700">All</button>
-                            <button onclick="setSalesCategoryFilter('Sales')" id="btn-cat-sales" class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 flex items-center gap-1"><i data-lucide="dollar-sign" class="w-3 h-3"></i>Sales</button>
-                            <button onclick="setSalesCategoryFilter('Repair')" id="btn-cat-repair" class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 flex items-center gap-1"><i data-lucide="wrench" class="w-3 h-3"></i>Repair</button>
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden relative">
+            <!-- Header -->
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shrink-0 z-10">
+                <h2 id="header-title" class="font-bold text-slate-800 flex items-center gap-2">
+                    <i data-lucide="pie-chart" class="w-5 h-5 text-brand-700"></i>
+                    Integrated Sales Dashboard
+                </h2>
+                <div id="header-actions" class="flex items-center gap-2">
+                    <div class="bg-slate-100 rounded-lg p-1 flex border border-slate-200">
+                        <button id="mode-all" onclick="switchSalesMode('ALL')" class="px-4 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700 border border-slate-100 transition-all">ASENDIA</button>
+                        <button id="mode-sales1" onclick="switchSalesMode('SALES1')" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all">Sales 1</button>
+                        <button id="mode-sales2" onclick="switchSalesMode('SALES2')" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all">Sales 2</button>
+                        <button id="mode-service" onclick="switchSalesMode('SERVICE')" class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all">Service</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Module: Sales Dashboard -->
+            <div id="module-sales" class="flex-1 overflow-y-auto custom-scrollbar p-8 block relative z-0">
+                <div class="max-w-7xl mx-auto space-y-8">
+                    
+                    <!-- Filters Section -->
+                    <div class="white-card p-4 rounded-2xl flex gap-6 items-center flex-wrap" id="sales-filters-container">
+                        <div class="flex items-center gap-2" id="customer-filter-group">
+                             <span class="text-sm font-bold text-slate-500 flex items-center gap-2">
+                                <i data-lucide="filter" class="w-4 h-4"></i> Customer:
+                            </span>
+                            <select id="filter-customer" class="text-sm border rounded-lg px-3 py-2 cursor-pointer hover:bg-slate-50 min-w-[200px]">
+                                <option value="ALL">All Customers</option>
+                            </select>
                         </div>
-                    </div>
 
-                    <!-- Automotive Filter Button -->
-                    <div class="flex items-center gap-2 ml-auto hidden" id="auto-filter-wrapper">
-                        <button onclick="toggleAutomotiveFilter()" id="btn-auto-filter" class="px-3 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700 border border-slate-200 transition-all flex items-center gap-2">
-                            <i data-lucide="cpu" class="w-4 h-4"></i>
-                            <span id="txt-auto-filter">전장사업부 포함</span>
-                        </button>
-                    </div>
-
-                    <!-- Exclude ASM_CM Button (Service Mode Only) -->
-                    <div class="flex items-center gap-2 ml-auto hidden" id="exclude-asmcm-wrapper">
-                        <button onclick="toggleAsmCmExclusion()" id="btn-exclude-asmcm" class="px-3 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700 border border-slate-200 transition-all flex items-center gap-2">
-                            <i data-lucide="minus-circle" class="w-4 h-4 text-brand-700"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- KPI Cards -->
-                <div id="sales-kpi-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Cards will be injected dynamically -->
-                </div>
-
-                <!-- Sales Content Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Chart Area -->
-                    <div class="lg:col-span-2 white-card rounded-2xl p-8 h-[450px] relative flex flex-col">
-                        <div class="flex justify-between items-center mb-4 shrink-0">
-                            <h3 id="chart-main-title" class="font-bold text-slate-800">Sales Trend</h3>
-                            
-                            <!-- Chart Type Toggle (Updated) -->
+                        <!-- Category Buttons -->
+                        <div class="flex items-center gap-2" id="category-filter-group">
+                            <span class="text-sm font-bold text-slate-500 flex items-center gap-2 mr-1">
+                                <i data-lucide="layers" class="w-4 h-4"></i> Category:
+                            </span>
                             <div class="flex bg-slate-100 p-1 rounded-lg border border-slate-200">
-                                <button onclick="setChartType('normal')" id="btn-chart-normal" class="px-3 py-1 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700">Monthly</button>
-                                <button onclick="setChartType('cumulative')" id="btn-chart-cumulative" class="px-3 py-1 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800">Cumulative</button>
-                                <button onclick="setChartType('yearly')" id="btn-chart-yearly" class="px-3 py-1 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800">Yearly</button>
+                                <button onclick="setSalesCategoryFilter('ALL')" id="btn-cat-all" class="px-3 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700">All</button>
+                                <button onclick="setSalesCategoryFilter('Sales')" id="btn-cat-sales" class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 flex items-center gap-1"><i data-lucide="dollar-sign" class="w-3 h-3"></i>Sales</button>
+                                <button onclick="setSalesCategoryFilter('Repair')" id="btn-cat-repair" class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 flex items-center gap-1"><i data-lucide="wrench" class="w-3 h-3"></i>Repair</button>
                             </div>
                         </div>
-                        <div class="flex-1 relative w-full h-full">
-                            <canvas id="salesChart"></canvas>
+
+                        <!-- Automotive Filter Button -->
+                        <div class="flex items-center gap-2 ml-auto hidden" id="auto-filter-wrapper">
+                            <button onclick="toggleAutomotiveFilter()" id="btn-auto-filter" class="px-3 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700 border border-slate-200 transition-all flex items-center gap-2">
+                                <i data-lucide="cpu" class="w-4 h-4"></i>
+                                <span id="txt-auto-filter">전장사업부 포함</span>
+                            </button>
+                        </div>
+
+                        <!-- Exclude ASM_CM Button (Service Mode Only) -->
+                        <div class="flex items-center gap-2 ml-auto hidden" id="exclude-asmcm-wrapper">
+                            <button onclick="toggleAsmCmExclusion()" id="btn-exclude-asmcm" class="px-3 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700 border border-slate-200 transition-all flex items-center gap-2">
+                                <i data-lucide="minus-circle" class="w-4 h-4 text-brand-700"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Secondary Chart or Table Area -->
-                    <div id="sales-secondary-container" class="lg:col-span-2 white-card rounded-2xl p-8 overflow-hidden flex flex-col min-h-[400px]">
-                        <!-- Dynamic Content (Table or Chart) -->
+                    <!-- KPI Cards -->
+                    <div id="sales-kpi-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Cards will be injected dynamically -->
+                    </div>
+
+                    <!-- Sales Content Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Chart Area -->
+                        <div class="lg:col-span-2 white-card rounded-2xl p-8 h-[450px] relative flex flex-col">
+                            <div class="flex justify-between items-center mb-4 shrink-0">
+                                <h3 id="chart-main-title" class="font-bold text-slate-800">Sales Trend</h3>
+                                
+                                <!-- Chart Type Toggle (Updated) -->
+                                <div class="flex bg-slate-100 p-1 rounded-lg border border-slate-200">
+                                    <button onclick="setChartType('normal')" id="btn-chart-normal" class="px-3 py-1 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700">Monthly</button>
+                                    <button onclick="setChartType('cumulative')" id="btn-chart-cumulative" class="px-3 py-1 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800">Cumulative</button>
+                                    <button onclick="setChartType('yearly')" id="btn-chart-yearly" class="px-3 py-1 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800">Yearly</button>
+                                </div>
+                            </div>
+                            <div class="flex-1 relative w-full h-full">
+                                <canvas id="salesChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Chart or Table Area -->
+                        <div id="sales-secondary-container" class="lg:col-span-2 white-card rounded-2xl p-8 overflow-hidden flex flex-col min-h-[400px]">
+                            <!-- Dynamic Content (Table or Chart) -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Module: ASM Project Management -->
-        <div id="module-project" class="flex-1 overflow-y-auto custom-scrollbar p-8 hidden relative z-0">
-            <div class="max-w-7xl mx-auto space-y-6">
-                <!-- Project Stats (Updated Design: Colored Borders) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="project-stat-card project-card-blue p-5 flex justify-between items-start">
-                        <div>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Projects</p>
-                            <h3 id="pstat-total" class="text-2xl font-bold text-slate-900 tracking-tight">0</h3>
+            <!-- Module: ASM Project Management -->
+            <div id="module-project" class="flex-1 overflow-y-auto custom-scrollbar p-8 hidden relative z-0">
+                <div class="max-w-7xl mx-auto space-y-6">
+                    <!-- Project Stats (Updated Design: Colored Borders) -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="project-stat-card project-card-blue p-5 flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Projects</p>
+                                <h3 id="pstat-total" class="text-2xl font-bold text-slate-900 tracking-tight">0</h3>
+                            </div>
+                            <div class="p-2.5 bg-blue-50 text-blue-500 rounded-xl">
+                                <i data-lucide="layers" class="w-5 h-5"></i>
+                            </div>
                         </div>
-                        <div class="p-2.5 bg-blue-50 text-blue-500 rounded-xl">
-                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        <div class="project-stat-card project-card-amber p-5 flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Open Projects</p>
+                                <h3 id="pstat-open" class="text-2xl font-bold text-slate-900 tracking-tight">0</h3>
+                            </div>
+                            <div class="p-2.5 bg-amber-50 text-amber-500 rounded-xl">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="project-stat-card project-card-emerald p-5 flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Done/Closed</p>
+                                <h3 id="pstat-done" class="text-2xl font-bold text-slate-900 tracking-tight">0</h3>
+                            </div>
+                            <div class="p-2.5 bg-emerald-50 text-emerald-500 rounded-xl">
+                                <i data-lucide="check-check" class="w-5 h-5"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="project-stat-card project-card-amber p-5 flex justify-between items-start">
-                        <div>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Open Projects</p>
-                            <h3 id="pstat-open" class="text-2xl font-bold text-slate-900 tracking-tight">0</h3>
+
+                    <!-- Filters -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 white-card p-4 rounded-2xl shadow-sm">
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Department</label>
+                            <select id="filterDept" class="w-full rounded-xl px-4 py-3 text-sm font-semibold cursor-pointer">
+                                <option value="ALL">All Departments</option>
+                                <option value="R&D">R&D</option>
+                                <option value="MFG">MFG</option>
+                            </select>
                         </div>
-                        <div class="p-2.5 bg-amber-50 text-amber-500 rounded-xl">
-                            <i data-lucide="clock" class="w-5 h-5"></i>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Category</label>
+                            <select id="filterCategory" class="w-full rounded-xl px-4 py-3 text-sm font-semibold cursor-pointer">
+                                <option value="ALL">All Categories</option>
+                                <option value="RFG">RFG</option>
+                                <option value="RFM">RFM</option>
+                                <option value="CONTROLLER">Controller</option>
+                                <option value="Etc">Etc</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Status</label>
+                            <div class="flex bg-slate-100 p-1 rounded-xl h-[46px] border border-slate-200" id="status-btn-container">
+                                <button onclick="setStatusFilter('OPEN')" id="btn-status-OPEN" class="flex-1 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-800 hover:bg-white">OPEN</button>
+                                <button onclick="setStatusFilter('FINISHED')" id="btn-status-FINISHED" class="flex-1 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-800 hover:bg-white">FINISHED</button>
+                                <button onclick="setStatusFilter('CLOSE')" id="btn-status-CLOSE" class="flex-1 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-800 hover:bg-white">CLOSE</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="project-stat-card project-card-emerald p-5 flex justify-between items-start">
-                        <div>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Done/Closed</p>
-                            <h3 id="pstat-done" class="text-2xl font-bold text-slate-900 tracking-tight">0</h3>
-                        </div>
-                        <div class="p-2.5 bg-emerald-50 text-emerald-500 rounded-xl">
-                            <i data-lucide="check-check" class="w-5 h-5"></i>
+
+                    <!-- Table -->
+                    <div class="white-card rounded-2xl overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-50 text-slate-500 font-bold uppercase tracking-widest border-b border-slate-200">
+                                    <tr>
+                                        <th class="px-6 py-4">Pri.</th>
+                                        <th class="px-6 py-4">Customer/Requestor</th>
+                                        <th class="px-6 py-4">Category</th>
+                                        <th class="px-6 py-4">Model / PN</th>
+                                        <th class="px-6 py-4">Qty</th>
+                                        <th class="px-6 py-4">Spec / App</th>
+                                        <th class="px-6 py-4">Dept / NBD</th>
+                                        <th class="px-6 py-4">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="project-table-body" class="divide-y divide-slate-100 text-slate-600"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Filters -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 white-card p-4 rounded-2xl shadow-sm">
-                    <div class="space-y-1.5">
-                        <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Department</label>
-                        <select id="filterDept" class="w-full rounded-xl px-4 py-3 text-sm font-semibold cursor-pointer">
-                            <option value="ALL">All Departments</option>
-                            <option value="R&D">R&D</option>
-                            <option value="MFG">MFG</option>
-                        </select>
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Category</label>
-                        <select id="filterCategory" class="w-full rounded-xl px-4 py-3 text-sm font-semibold cursor-pointer">
-                            <option value="ALL">All Categories</option>
-                            <option value="RFG">RFG</option>
-                            <option value="RFM">RFM</option>
-                            <option value="CONTROLLER">Controller</option>
-                            <option value="Etc">Etc</option>
-                        </select>
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Status</label>
-                        <div class="flex bg-slate-100 p-1 rounded-xl h-[46px] border border-slate-200" id="status-btn-container">
-                            <button onclick="setStatusFilter('OPEN')" id="btn-status-OPEN" class="flex-1 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-800 hover:bg-white">OPEN</button>
-                            <button onclick="setStatusFilter('FINISHED')" id="btn-status-FINISHED" class="flex-1 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-800 hover:bg-white">FINISHED</button>
-                            <button onclick="setStatusFilter('CLOSE')" id="btn-status-CLOSE" class="flex-1 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-slate-800 hover:bg-white">CLOSE</button>
+            <!-- Module: ASM Core Project -->
+            <div id="module-core" class="flex-1 overflow-y-auto custom-scrollbar p-8 hidden relative z-0">
+                <div class="max-w-7xl mx-auto space-y-8">
+                    <!-- Header Info & Filter -->
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800">Core Projects</h2>
+                            <p class="text-slate-500 text-sm mt-1">High-priority strategic projects for ASM</p>
+                        </div>
+                        
+                        <!-- Core Filter -->
+                        <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200" id="core-filter-container">
+                            <button onclick="setCoreFilter('Active')" id="btn-core-active" class="px-4 py-2 rounded-lg text-xs font-bold transition-all bg-white shadow-sm text-brand-700 border border-slate-200">Active (On Track & Delayed)</button>
+                            <button onclick="setCoreFilter('Completed')" id="btn-core-completed" class="px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 hover:text-slate-800 hover:bg-white/50">Completed</button>
+                            <button onclick="setCoreFilter('All')" id="btn-core-all" class="px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 hover:text-slate-800 hover:bg-white/50">All</button>
                         </div>
                     </div>
-                </div>
 
-                <!-- Table -->
-                <div class="white-card rounded-2xl overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-50 text-slate-500 font-bold uppercase tracking-widest border-b border-slate-200">
-                                <tr>
-                                    <th class="px-6 py-4">Pri.</th>
-                                    <th class="px-6 py-4">Customer/Requestor</th>
-                                    <th class="px-6 py-4">Category</th>
-                                    <th class="px-6 py-4">Model / PN</th>
-                                    <th class="px-6 py-4">Qty</th>
-                                    <th class="px-6 py-4">Spec / App</th>
-                                    <th class="px-6 py-4">Dept / NBD</th>
-                                    <th class="px-6 py-4">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="project-table-body" class="divide-y divide-slate-100 text-slate-600"></tbody>
-                        </table>
+                    <!-- Core Project Cards Grid -->
+                    <div id="core-project-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Cards will be injected via JS -->
                     </div>
                 </div>
             </div>
+
         </div>
-
-        <!-- Module: ASM Core Project -->
-        <div id="module-core" class="flex-1 overflow-y-auto custom-scrollbar p-8 hidden relative z-0">
-            <div class="max-w-7xl mx-auto space-y-8">
-                <!-- Header Info & Filter -->
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-800">Core Projects</h2>
-                        <p class="text-slate-500 text-sm mt-1">High-priority strategic projects for ASM</p>
-                    </div>
-                    
-                    <!-- Core Filter -->
-                    <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200" id="core-filter-container">
-                        <button onclick="setCoreFilter('Active')" id="btn-core-active" class="px-4 py-2 rounded-lg text-xs font-bold transition-all bg-white shadow-sm text-brand-700 border border-slate-200">Active (On Track & Delayed)</button>
-                        <button onclick="setCoreFilter('Completed')" id="btn-core-completed" class="px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 hover:text-slate-800 hover:bg-white/50">Completed</button>
-                        <button onclick="setCoreFilter('All')" id="btn-core-all" class="px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 hover:text-slate-800 hover:bg-white/50">All</button>
-                    </div>
-                </div>
-
-                <!-- Core Project Cards Grid -->
-                <div id="core-project-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Cards will be injected via JS -->
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <!-- Toast -->
@@ -397,6 +454,140 @@
     <script src="./project_asm.js"></script>
     <script src="./core_project_data.js"></script>
 
+    <!-- Firebase Auth Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Provided Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwNHcdB0yFHm3fqJAbqMtD4Kx7LBsNpnM",
+            authDomain: "sales-costing.firebaseapp.com",
+            projectId: "sales-costing",
+            storageBucket: "sales-costing.firebasestorage.app",
+            messagingSenderId: "160253556783",
+            appId: "1:160253556783:web:54b6daf3a1157864cceeda",
+            measurementId: "G-E5KL85FC3X"
+        };
+
+        // Initialize Firebase
+        let app, auth;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            console.log("Firebase initialized");
+        } catch (e) {
+            console.error("Firebase init error:", e);
+        }
+
+        // Elements
+        const loginOverlay = document.getElementById("login-overlay");
+        const appContainer = document.getElementById("app-container");
+        const loginForm = document.getElementById("login-form");
+        const errorMsg = document.getElementById("error-message");
+        const loginBtn = document.getElementById("login-btn");
+        const btnText = loginBtn.querySelector(".btn-text");
+        const userEmailDisplay = document.getElementById("user-email-display");
+        const logoutBtn = document.getElementById("logout-btn");
+        const forgotPwBtn = document.getElementById("forgot-pw-btn");
+        const changePwBtn = document.getElementById("change-pw-btn");
+
+        // Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User logged in:", user.email);
+                userEmailDisplay.textContent = user.email;
+                loginOverlay.classList.add('hidden');
+                appContainer.classList.remove('hidden');
+                // Ensure chart renders if loaded while hidden
+                if(window.renderSalesDashboard) window.renderSalesDashboard();
+            } else {
+                console.log("No user");
+                loginOverlay.classList.remove('hidden');
+                appContainer.classList.add('hidden');
+            }
+        });
+
+        // Login
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            errorMsg.classList.add('hidden');
+            loginBtn.disabled = true;
+            btnText.textContent = "Signing in...";
+            
+            // Add spinner
+            const spinner = document.createElement("div");
+            spinner.className = "spinner";
+            loginBtn.insertBefore(spinner, btnText);
+
+            signInWithEmailAndPassword(auth, email, password)
+                .catch((error) => {
+                    errorMsg.classList.remove('hidden');
+                    switch (error.code) {
+                        case 'auth/invalid-email': errorMsg.textContent = "Invalid email format."; break;
+                        case 'auth/user-not-found':
+                        case 'auth/wrong-password':
+                        case 'auth/invalid-credential': errorMsg.textContent = "Incorrect email or password."; break;
+                        case 'auth/too-many-requests': errorMsg.textContent = "Too many attempts. Try again later."; break;
+                        default: errorMsg.textContent = "Login failed: " + error.message;
+                    }
+                    loginBtn.disabled = false;
+                    btnText.textContent = "Sign In";
+                    if(loginBtn.querySelector(".spinner")) loginBtn.querySelector(".spinner").remove();
+                });
+        });
+
+        // Logout
+        if(logoutBtn) {
+            logoutBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                signOut(auth).then(() => {
+                    window.location.reload();
+                }).catch((err) => console.error("Logout error", err));
+            });
+        }
+
+        // Forgot Password (Login Screen)
+        if(forgotPwBtn) {
+            forgotPwBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const email = document.getElementById("email").value;
+                if(!email) {
+                    errorMsg.classList.remove('hidden');
+                    errorMsg.textContent = "Please enter your email above and click 'Forgot Password?' again.";
+                    return;
+                }
+                if(confirm(`Send password reset email to ${email}?`)) {
+                    sendPasswordResetEmail(auth, email)
+                        .then(() => alert("Password reset email sent!"))
+                        .catch(err => {
+                            errorMsg.classList.remove('hidden');
+                            errorMsg.textContent = err.message;
+                        });
+                }
+            });
+        }
+
+        // Change Password (Sidebar)
+        if(changePwBtn) {
+            changePwBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const user = auth.currentUser;
+                if(user && user.email) {
+                    if(confirm(`Send reset email to ${user.email}?`)) {
+                        sendPasswordResetEmail(auth, user.email)
+                            .then(() => alert("Email sent! Check your inbox to change password."))
+                            .catch(err => alert(err.message));
+                    }
+                }
+            });
+        }
+    </script>
+
+    <!-- Main Logic Script -->
     <script>
         // Formatter
         const fmtM = (val) => {
@@ -442,7 +633,6 @@
             document.getElementById('filter-customer').addEventListener('change', renderSalesDashboard);
             
             // Listeners for mode switching
-            document.getElementById('mode-asm').addEventListener('click', () => switchSalesMode('SALES1')); 
             document.getElementById('mode-all').addEventListener('click', () => switchSalesMode('ALL'));
             document.getElementById('mode-sales1').addEventListener('click', () => switchSalesMode('SALES1'));
             document.getElementById('mode-sales2').addEventListener('click', () => switchSalesMode('SALES2'));
@@ -469,7 +659,7 @@
             const d2026 = window.salesData2026 || [];
             
             if (d2025.length === 0 && d2026.length === 0) {
-                console.warn("No sales data found in window object.");
+                // console.warn("No sales data found in window object.");
                 return;
             }
 
@@ -662,9 +852,11 @@
                 if(isAsmCmExcluded) {
                     btnExclude.className = "px-3 py-1.5 text-xs font-bold rounded-md bg-white shadow-sm text-brand-700 border border-slate-200 transition-all flex items-center gap-2";
                     btnExclude.innerHTML = `<i data-lucide="minus-circle" class="w-4 h-4 text-brand-700"></i>`;
+                    btnExclude.title = "ASM_CM Excluded";
                 } else {
                     btnExclude.className = "px-3 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 border border-transparent transition-all flex items-center gap-2";
                     btnExclude.innerHTML = `<i data-lucide="minus-circle" class="w-4 h-4 text-slate-400"></i>`;
+                    btnExclude.title = "Include ASM_CM";
                 }
 
             } else {
