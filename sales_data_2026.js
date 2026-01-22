@@ -32,7 +32,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_RFG",
-    "amount": 113000000
+    "amount": 245050000
   },
   {
     "year": 2026,
@@ -40,7 +40,23 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_RFM",
-    "amount": 411800000
+    "amount": 671232000
+  },
+  {
+    "year": 2026,
+    "month": 1,
+    "customer": "ASM_OEM",
+    "category": "Repair",
+    "type": "Repair_RFG",
+    "amount": 5270000
+  },
+  {
+    "year": 2026,
+    "month": 1,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 1750000
   },
   {
     "year": 2026,
@@ -71,7 +87,23 @@ window.salesData2026 = [
     "month": 1,
     "customer": "ASM_CM",
     "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 171114534
+  },
+  {
+    "year": 2026,
+    "month": 1,
+    "customer": "ASM_CM",
+    "category": "Repair",
+    "type": "Repair_RFM",
+    "amount": 1404000
+  },
+  {
+    "year": 2026,
+    "month": 1,
+    "customer": "ASM_CM",
+    "category": "Sales",
     "type": "Sales_Comm",
-    "amount": 877500
+    "amount": 38581022
   }
 ];
