@@ -16,7 +16,7 @@ window.salesData2026 = [
     "customer": "SK HYNIX",
     "category": "Repair",
     "type": "Repair_RFM",
-    "amount": 24949900
+    "amount": 30890500
   },
   {
     "year": 2026,
@@ -32,7 +32,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_RFG",
-    "amount": 245050000
+    "amount": 379296000
   },
   {
     "year": 2026,
@@ -40,7 +40,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_RFM",
-    "amount": 671232000
+    "amount": 918000000
   },
   {
     "year": 2026,
@@ -48,7 +48,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Repair",
     "type": "Repair_RFG",
-    "amount": 5270000
+    "amount": 7297500
   },
   {
     "year": 2026,
@@ -56,7 +56,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_Comm",
-    "amount": 1750000
+    "amount": 405564170
   },
   {
     "year": 2026,
@@ -85,10 +85,34 @@ window.salesData2026 = [
   {
     "year": 2026,
     "month": 1,
+    "customer": "Others",
+    "category": "Repair",
+    "type": "Repair_RFG",
+    "amount": 2700000
+  },
+  {
+    "year": 2026,
+    "month": 1,
+    "customer": "Others",
+    "category": "Repair",
+    "type": "Repair_RFM",
+    "amount": 18116114
+  },
+  {
+    "year": 2026,
+    "month": 1,
+    "customer": "Others",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 2580000
+  },
+  {
+    "year": 2026,
+    "month": 1,
     "customer": "ASM_CM",
     "category": "Sales",
     "type": "Sales_RFM",
-    "amount": 171114534
+    "amount": 228226610
   },
   {
     "year": 2026,
@@ -96,7 +120,7 @@ window.salesData2026 = [
     "customer": "ASM_CM",
     "category": "Repair",
     "type": "Repair_RFM",
-    "amount": 1404000
+    "amount": 71472000
   },
   {
     "year": 2026,
