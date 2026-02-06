@@ -100,11 +100,27 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_RFG",
+    "amount": 88582200
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_RFM",
     "amount": 1018720000
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 40005000
   },
   {
     "year": 2026,
@@ -121,6 +137,14 @@ window.salesData2026 = [
     "category": "Sales",
     "type": "Sales_Comm",
     "amount": 433264170
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 55300000
   },
   {
     "year": 2026,
@@ -276,11 +300,27 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "ASM_CM",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 82984000
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "ASM_CM",
     "category": "Repair",
     "type": "Repair_RFM",
     "amount": 71472000
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "ASM_CM",
+    "category": "Repair",
+    "type": "Repair_RFM",
+    "amount": 53072000
   },
   {
     "year": 2026,
