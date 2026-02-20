@@ -84,6 +84,22 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "원익IPS",
+    "category": "Sales",
+    "type": "Sales_RFG",
+    "amount": 64800000
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "원익IPS",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 53400000
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "원익IPS",
     "category": "Sales",
@@ -104,7 +120,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_RFG",
-    "amount": 88582200
+    "amount": 623687000
   },
   {
     "year": 2026,
@@ -120,7 +136,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_RFM",
-    "amount": 40005000
+    "amount": 59965000
   },
   {
     "year": 2026,
@@ -144,7 +160,7 @@ window.salesData2026 = [
     "customer": "ASM_OEM",
     "category": "Sales",
     "type": "Sales_Comm",
-    "amount": 55300000
+    "amount": 61460000
   },
   {
     "year": 2026,
@@ -304,7 +320,7 @@ window.salesData2026 = [
     "customer": "ASM_CM",
     "category": "Sales",
     "type": "Sales_RFM",
-    "amount": 82984000
+    "amount": 320212416
   },
   {
     "year": 2026,
@@ -328,7 +344,7 @@ window.salesData2026 = [
     "customer": "ASM_CM",
     "category": "Sales",
     "type": "Sales_Comm",
-    "amount": 37787075
+    "amount": 877500
   },
   {
     "year": 2026,
