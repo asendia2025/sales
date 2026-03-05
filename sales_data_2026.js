@@ -68,6 +68,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "SK HYNIX",
+    "category": "Repair",
+    "type": "Repair_RFG",
+    "amount": 765000
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "SK HYNIX",
     "category": "Repair",
@@ -80,7 +88,7 @@ window.salesData2026 = [
     "customer": "SK HYNIX",
     "category": "Repair",
     "type": "Repair_RFM",
-    "amount": 32112040
+    "amount": 43729240
   },
   {
     "year": 2026,
@@ -92,7 +100,23 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "주성",
+    "category": "Sales",
+    "type": "Sales_RFG",
+    "amount": 58800000
+  },
+  {
+    "year": 2026,
     "month": 1,
+    "customer": "주성",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 26400000
+  },
+  {
+    "year": 2026,
+    "month": 2,
     "customer": "주성",
     "category": "Sales",
     "type": "Sales_RFM",
@@ -244,6 +268,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "PSK(H)",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 200990500
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "PSK(H)",
     "category": "Sales",
@@ -252,11 +284,35 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "PSK(H)",
+    "category": "Sales",
+    "type": "Sales_Mod",
+    "amount": 1140000
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "PSK(H)",
     "category": "Repair",
     "type": "Repair_RFM",
     "amount": 23771000
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "PSK(H)",
+    "category": "Repair",
+    "type": "Repair_RFM",
+    "amount": 7136800
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "PSK(H)",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 1200000
   },
   {
     "year": 2026,
@@ -308,6 +364,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "SK HYNIX",
+    "category": "Repair",
+    "type": "Repair_RFM",
+    "amount": 39756356
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "삼성전자반도체사업부",
     "category": "Repair",
@@ -316,11 +380,35 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 2,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_RFG",
+    "amount": 36441210
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 8379000
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "Others",
     "category": "Sales",
     "type": "Sales_Comm",
     "amount": 18320000
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "Others",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 36220000
   },
   {
     "year": 2026,
@@ -337,6 +425,14 @@ window.salesData2026 = [
     "category": "Sales",
     "type": "Sales_RFM",
     "amount": 56927940
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "Others",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 54692820
   },
   {
     "year": 2026,
@@ -409,5 +505,13 @@ window.salesData2026 = [
     "category": "Etc",
     "type": "Sales",
     "amount": 198292150
+  },
+  {
+    "year": 2026,
+    "month": 2,
+    "customer": "전장사업부",
+    "category": "Etc",
+    "type": "Sales",
+    "amount": 311168310
   }
 ];
