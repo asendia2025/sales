@@ -84,6 +84,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 4,
+    "customer": "삼성전자반도체사업부",
+    "category": "Repair",
+    "type": "Repair_RFM",
+    "amount": 14676316
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "SK HYNIX",
     "category": "Repair",
@@ -121,6 +129,14 @@ window.salesData2026 = [
     "category": "Repair",
     "type": "Repair_RFM",
     "amount": 34473400
+  },
+  {
+    "year": 2026,
+    "month": 4,
+    "customer": "SK HYNIX",
+    "category": "Repair",
+    "type": "Repair_RFM",
+    "amount": 12381900
   },
   {
     "year": 2026,
@@ -228,6 +244,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 4,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_RFG",
+    "amount": 442125200
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "ASM_OEM",
     "category": "Sales",
@@ -249,6 +273,14 @@ window.salesData2026 = [
     "category": "Sales",
     "type": "Sales_RFM",
     "amount": 1055146000
+  },
+  {
+    "year": 2026,
+    "month": 4,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 222990000
   },
   {
     "year": 2026,
@@ -276,6 +308,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 4,
+    "customer": "ASM_OEM",
+    "category": "Repair",
+    "type": "Repair_RFG",
+    "amount": 8613000
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "ASM_OEM",
     "category": "Sales",
@@ -297,6 +337,14 @@ window.salesData2026 = [
     "category": "Sales",
     "type": "Sales_Comm",
     "amount": 84625260
+  },
+  {
+    "year": 2026,
+    "month": 4,
+    "customer": "ASM_OEM",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 2500000
   },
   {
     "year": 2026,
@@ -540,6 +588,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 4,
+    "customer": "Others",
+    "category": "Sales",
+    "type": "Sales_RFG",
+    "amount": 18462000
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "Others",
     "category": "Sales",
@@ -553,6 +609,14 @@ window.salesData2026 = [
     "category": "Sales",
     "type": "Sales_Comm",
     "amount": 36220000
+  },
+  {
+    "year": 2026,
+    "month": 4,
+    "customer": "Others",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 45696000
   },
   {
     "year": 2026,
@@ -593,6 +657,14 @@ window.salesData2026 = [
     "category": "Sales",
     "type": "Sales_Mod",
     "amount": 7094000
+  },
+  {
+    "year": 2026,
+    "month": 4,
+    "customer": "Others",
+    "category": "Sales",
+    "type": "Sales_Mod",
+    "amount": 12160000
   },
   {
     "year": 2026,
@@ -660,6 +732,14 @@ window.salesData2026 = [
   },
   {
     "year": 2026,
+    "month": 4,
+    "customer": "ASM_CM",
+    "category": "Sales",
+    "type": "Sales_RFM",
+    "amount": 419964248
+  },
+  {
+    "year": 2026,
     "month": 1,
     "customer": "ASM_CM",
     "category": "Repair",
@@ -681,6 +761,14 @@ window.salesData2026 = [
     "category": "Sales",
     "type": "Sales_Comm",
     "amount": 877500
+  },
+  {
+    "year": 2026,
+    "month": 4,
+    "customer": "ASM_CM",
+    "category": "Sales",
+    "type": "Sales_Comm",
+    "amount": 6830000
   },
   {
     "year": 2026,
